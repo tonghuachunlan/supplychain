@@ -1,0 +1,56 @@
+groups:
+- name: supplychain_alerts
+  rules:
+  - alert: HighResponseTime
+    expr: rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m]) > 2
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "高响应时间"
+      description: "接口平均响应时间超过2秒"
+
+  - alert: HighErrorRate
+    expr: sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m])) > 0.05
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "高错误率"
+      description: "HTTP 5xx 错误率超过 5%"
+
+  - alert: HighActiveUsers
+    expr: active_users > 1000
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "高活跃用户数"
+      description: "当前活跃用户数超过1000"
+
+  - alert: ServiceDown
+    expr: up == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "服务宕机"
+      description: "服务实例已停止运行"
+
+  - alert: HighMemoryUsage
+    expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 90
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "内存使用率高"
+      description: "服务器内存使用率超过90%"
+
+  - alert: HighCPUUsage
+    expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "CPU使用率高"
+      description: "服务器CPU使用率超过90%" 
