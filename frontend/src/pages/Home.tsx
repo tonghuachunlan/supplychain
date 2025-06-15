@@ -9,6 +9,7 @@ import {
   Image,
   Icon,
   useColorModeValue,
+  VStack,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { FiBook, FiUsers, FiAward, FiTrendingUp } from 'react-icons/fi';
@@ -43,109 +44,26 @@ export default function Home() {
   );
 
   return (
-    <Box>
-      {/* Hero Section */}
-      <Box
-        bg={bgGradient}
-        pt={{ base: 20, md: 28 }}
-        pb={{ base: 16, md: 24 }}
-        px={8}
-      >
-        <Container maxW="container.xl">
-          <Stack
-            direction={{ base: 'column', md: 'row' }}
-            spacing={{ base: 8, md: 16 }}
-            align="center"
-          >
-            <Box flex="1">
-              <Heading
-                as="h1"
-                size="2xl"
-                mb={6}
-                lineHeight="shorter"
-                fontWeight="bold"
-              >
-                掌握供应链思维，
-                <br />
-                成就卓越管理者
-              </Heading>
-              <Text fontSize="xl" mb={8} color="gray.600">
-                通过系统化的学习，掌握供应链管理的核心理念和实践技能，
-                提升企业运营效率，实现可持续发展。
-              </Text>
-              <Stack direction={{ base: 'column', sm: 'row' }} spacing={4}>
-                <Button
-                  as={RouterLink}
-                  to="/courses"
-                  size="lg"
-                  colorScheme="brand"
-                >
-                  立即开始学习
-                </Button>
-                <Button
-                  as={RouterLink}
-                  to="/about"
-                  size="lg"
-                  variant="outline"
-                >
-                  了解更多
-                </Button>
-              </Stack>
-            </Box>
-            <Box flex="1">
-              <Image
-                src="/hero-image.png"
-                alt="Supply Chain Management"
-                maxH="400px"
-                objectFit="contain"
-              />
-            </Box>
-          </Stack>
-        </Container>
-      </Box>
-
-      {/* Features Section */}
-      <Box py={20}>
-        <Container maxW="container.xl">
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
-            {features.map((feature, index) => (
-              <Stack key={index} spacing={4} align="center" textAlign="center">
-                <Icon
-                  as={feature.icon}
-                  w={10}
-                  h={10}
-                  color="brand.500"
-                />
-                <Heading as="h3" size="md">
-                  {feature.title}
-                </Heading>
-                <Text color="gray.600">{feature.description}</Text>
-              </Stack>
-            ))}
-          </SimpleGrid>
-        </Container>
-      </Box>
-
-      {/* CTA Section */}
-      <Box bg="brand.50" py={20}>
-        <Container maxW="container.xl" textAlign="center">
-          <Heading as="h2" size="xl" mb={6}>
-            准备好开始您的学习之旅了吗？
+    <Container maxW="container.xl">
+      <Box py={20} textAlign="center">
+        <VStack spacing={6}>
+          <Heading as="h1" size="2xl">
+            欢迎来到供应链思维学院
           </Heading>
-          <Text fontSize="lg" mb={8} color="gray.600">
-            加入我们，开启供应链管理的专业学习之路。
+          <Text fontSize="xl" maxW="2xl">
+            在这里，您可以学习供应链管理的核心理念和实践技能，提升职业竞争力。
           </Text>
           <Button
             as={RouterLink}
-            to="/register"
+            to="/courses"
             size="lg"
-            colorScheme="brand"
-            px={8}
+            colorScheme="blue"
+            mt={8}
           >
-            免费注册
+            浏览课程
           </Button>
-        </Container>
+        </VStack>
       </Box>
-    </Box>
+    </Container>
   );
 } 
