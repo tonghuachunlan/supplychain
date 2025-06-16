@@ -3,35 +3,128 @@ import { extendTheme } from '@chakra-ui/react';
 const theme = extendTheme({
   colors: {
     brand: {
-      50: '#e3f2fd',
-      100: '#bbdefb',
-      200: '#90caf9',
-      300: '#64b5f6',
-      400: '#42a5f5',
-      500: '#2196f3',
-      600: '#1e88e5',
-      700: '#1976d2',
-      800: '#1565c0',
-      900: '#0d47a1',
+      // 主色调
+      primary: '#165DFF',    // 深海蓝
+      gray: '#F0F2F5',      // 科技银灰
+      dark: '#1D2129',      // 墨黑
+      // 辅助色
+      orange: '#FF7D00',    // 智能橙
+      green: '#00B42A',     // 科技青
     },
   },
   fonts: {
-    heading: `'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'`,
-    body: `'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'`,
+    heading: '"Inter", "Source Han Sans SC", "思源黑体", -apple-system, sans-serif',
+    body: '"Inter", "Source Han Sans SC", "思源黑体", -apple-system, sans-serif',
+  },
+  fontSizes: {
+    body: '16px',
+    bodyLarge: '18px',
+  },
+  lineHeights: {
+    body: 1.8,
   },
   components: {
+    // 卡片样式
+    Card: {
+      baseStyle: {
+        container: {
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          transition: 'all 0.3s ease',
+          _hover: {
+            transform: 'translateY(-2px)',
+            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
+          },
+        },
+      },
+    },
+    // 按钮样式
     Button: {
-      defaultProps: {
-        colorScheme: 'brand',
+      variants: {
+        primary: {
+          bg: 'brand.primary',
+          color: 'white',
+          _hover: {
+            bg: '#2970FF',
+            _disabled: {
+              bg: 'brand.primary',
+            },
+          },
+        },
+        secondary: {
+          bg: 'brand.orange',
+          color: 'white',
+          _hover: {
+            bg: '#FF9500',
+          },
+        },
+        success: {
+          bg: 'brand.green',
+          color: 'white',
+          _hover: {
+            bg: '#00D632',
+          },
+        },
+      },
+    },
+    // 标题样式
+    Heading: {
+      baseStyle: {
+        fontWeight: 700,
+        color: 'brand.dark',
+      },
+    },
+    // 文本样式
+    Text: {
+      baseStyle: {
+        fontSize: 'body',
+        lineHeight: 'body',
+        color: 'brand.dark',
       },
     },
   },
+  // 全局样式
   styles: {
     global: {
       body: {
-        bg: 'gray.50',
+        bg: 'white',
+        color: 'brand.dark',
+      },
+      // 滚动条样式
+      '::-webkit-scrollbar': {
+        width: '6px',
+        height: '6px',
+      },
+      '::-webkit-scrollbar-track': {
+        bg: 'brand.gray',
+      },
+      '::-webkit-scrollbar-thumb': {
+        bg: 'brand.primary',
+        borderRadius: '3px',
       },
     },
+  },
+  // 动画配置
+  transition: {
+    easing: {
+      default: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    },
+    duration: {
+      default: '0.3s',
+    },
+  },
+  // 阴影配置
+  shadows: {
+    card: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    cardHover: '0 12px 40px rgba(0, 0, 0, 0.15)',
+    tooltip: '0 4px 12px rgba(0, 0, 0, 0.1)',
+  },
+  // 圆角配置
+  radii: {
+    card: '12px',
+    button: '8px',
   },
 });
 

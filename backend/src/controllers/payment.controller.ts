@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Types } from 'mongoose';
 import { paymentService, PaymentMethod } from '../services/payment.service';
 import { AuthRequest } from '../types/auth';
 import { paymentConfig } from '../config/payment.config';
@@ -6,137 +7,86 @@ import { paymentConfig } from '../config/payment.config';
 export const paymentController = {
   async createPayment(req: AuthRequest, res: Response) {
     try {
-      const { courseId, amount, paymentMethod, description } = req.body;
+      const { courseId, amount, method } = req.body;
 
-      if (!courseId || !amount || !paymentMethod) {
-        return res.status(400).json({
-          message: '缺少必要参数',
-        });
+      if (!req.user) {
+        return res.status(401).json({ message: '未授权' });
       }
 
-      const result = await paymentService.createPayment({
-        userId: req.user.id,
-        courseId,
+      const paymentInfo = {
+        orderId: new Types.ObjectId().toString(),
         amount,
-        paymentMethod: paymentMethod as PaymentMethod,
-        description,
-      });
+        currency: 'CNY',
+        method: method as PaymentMethod,
+        description: '课程购买',
+        userId: new Types.ObjectId(req.user.id),
+        courseId: new Types.ObjectId(courseId),
+      };
 
-      res.status(200).json({
-        message: '创建支付订单成功',
-        data: result,
-      });
-    } catch (error: any) {
-      res.status(400).json({
-        message: error.message || '创建支付订单失败',
-      });
+      const result = await paymentService.createPayment(paymentInfo);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: '创建支付失败' });
     }
   },
 
   async queryPaymentStatus(req: Request, res: Response) {
     try {
-      const { orderId, paymentMethod } = req.params;
-
-      const result = await paymentService.queryPaymentStatus(
-        orderId,
-        paymentMethod as PaymentMethod
-      );
-
-      res.status(200).json({
-        message: '查询支付状态成功',
-        data: result,
-      });
-    } catch (error: any) {
-      res.status(400).json({
-        message: error.message || '查询支付状态失败',
-      });
+      const { orderId, method } = req.params;
+      const result = await paymentService.queryPaymentStatus(orderId, method as PaymentMethod);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: '查询支付状态失败' });
     }
   },
 
   async refund(req: AuthRequest, res: Response) {
     try {
-      const { orderId, paymentMethod, amount, reason } = req.body;
-
-      if (!orderId || !paymentMethod || !amount) {
-        return res.status(400).json({
-          message: '缺少必要参数',
-        });
-      }
-
+      const { orderId, amount, reason } = req.body;
       const result = await paymentService.refund({
         orderId,
-        paymentMethod: paymentMethod as PaymentMethod,
         amount,
         reason,
       });
-
-      res.status(200).json({
-        message: '退款申请成功',
-        data: result,
-      });
-    } catch (error: any) {
-      res.status(400).json({
-        message: error.message || '退款申请失败',
-      });
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: '退款失败' });
     }
   },
 
   async closePayment(req: Request, res: Response) {
     try {
-      const { orderId, paymentMethod } = req.params;
-
-      await paymentService.closePayment(orderId, paymentMethod as PaymentMethod);
-
-      res.status(200).json({
-        message: '关闭支付订单成功',
-      });
-    } catch (error: any) {
-      res.status(400).json({
-        message: error.message || '关闭支付订单失败',
-      });
+      const { orderId, method } = req.params;
+      await paymentService.closePayment(orderId, method as PaymentMethod);
+      res.json({ message: '支付已关闭' });
+    } catch (error) {
+      res.status(500).json({ message: '关闭支付失败' });
     }
   },
 
   async alipayNotify(req: Request, res: Response) {
     try {
       const isValid = await paymentService.verifyPaymentNotify('alipay', req.body);
-
       if (!isValid) {
-        return res.status(400).send('fail');
+        return res.status(400).json({ message: '支付通知验证失败' });
       }
-
-      // TODO: 更新订单状态
-
+      // 处理支付成功逻辑
       res.send('success');
-    } catch (error: any) {
-      console.error('支付宝回调处理失败:', error);
-      res.status(500).send('fail');
+    } catch (error) {
+      res.status(500).json({ message: '处理支付通知失败' });
     }
   },
 
   async wechatNotify(req: Request, res: Response) {
     try {
       const isValid = await paymentService.verifyPaymentNotify('wechat', req.body);
-
       if (!isValid) {
-        return res.status(400).json({
-          return_code: 'FAIL',
-          return_msg: '签名验证失败',
-        });
+        return res.status(400).json({ message: '支付通知验证失败' });
       }
-
-      // TODO: 更新订单状态
-
-      res.json({
-        return_code: 'SUCCESS',
-        return_msg: 'OK',
-      });
-    } catch (error: any) {
-      console.error('微信支付回调处理失败:', error);
-      res.status(500).json({
-        return_code: 'FAIL',
-        return_msg: error.message,
-      });
+      // 处理支付成功逻辑
+      res.send('success');
+    } catch (error) {
+      res.status(500).json({ message: '处理支付通知失败' });
     }
   },
 

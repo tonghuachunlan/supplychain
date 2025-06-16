@@ -11,6 +11,7 @@ import {
   Icon,
   IconButton,
   useBreakpointValue,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { FiSearch, FiFilter, FiX } from 'react-icons/fi';
 import { CourseFilters as FilterOptions } from '../api/services/course.service';
@@ -20,7 +21,7 @@ interface CourseFiltersProps {
   isLoading?: boolean;
 }
 
-export function CourseFilters({ onFilterChange, isLoading }: CourseFiltersProps) {
+export default function CourseFilters({ onFilterChange, isLoading }: CourseFiltersProps) {
   const [filters, setFilters] = useState<FilterOptions>({
     search: '',
     sortBy: 'createdAt',
@@ -29,6 +30,7 @@ export function CourseFilters({ onFilterChange, isLoading }: CourseFiltersProps)
 
   const [isExpanded, setIsExpanded] = useState(false);
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const bgColor = useColorModeValue('white', 'gray.700');
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -100,30 +102,53 @@ export function CourseFilters({ onFilterChange, isLoading }: CourseFiltersProps)
   );
 
   return (
-    <Box bg="white" p={4} borderRadius="lg" shadow="sm">
-      <Stack spacing={4}>
-        <HStack>
-          <FormControl flex="1">
-            <Input
-              placeholder="搜索课程..."
-              value={filters.search}
-              onChange={handleSearchChange}
-              isDisabled={isLoading}
-              leftIcon={<Icon as={FiSearch} color="gray.400" />}
-            />
-          </FormControl>
-          {isMobile && (
-            <IconButton
-              aria-label="Toggle filters"
-              icon={<Icon as={FiFilter} />}
-              onClick={() => setIsExpanded(!isExpanded)}
-              isDisabled={isLoading}
-            />
-          )}
-        </HStack>
+    <Stack
+      direction={{ base: 'column', md: 'row' }}
+      spacing={4}
+      bg={bgColor}
+      p={4}
+      borderRadius="lg"
+      boxShadow="sm"
+    >
+      <HStack>
+        <FormControl flex="1">
+          <Input
+            placeholder="搜索课程..."
+            value={filters.search}
+            onChange={handleSearchChange}
+            isDisabled={isLoading}
+            leftIcon={<Icon as={FiSearch} color="gray.400" />}
+            maxW={{ base: 'full', md: '300px' }}
+          />
+        </FormControl>
+        {isMobile && (
+          <IconButton
+            aria-label="Toggle filters"
+            icon={<Icon as={FiFilter} />}
+            onClick={() => setIsExpanded(!isExpanded)}
+            isDisabled={isLoading}
+          />
+        )}
+      </HStack>
 
-        {(!isMobile || isExpanded) && <FilterControls />}
-      </Stack>
-    </Box>
+      {(!isMobile || isExpanded) && <FilterControls />}
+
+      <Select placeholder="课程阶段" maxW={{ base: 'full', md: '200px' }}>
+        <option value="stage1">物流管理基础</option>
+        <option value="stage2">供应链集成管理</option>
+        <option value="stage3">供应链网络协同</option>
+        <option value="stage4">数字供应链转型</option>
+      </Select>
+
+      <Select placeholder="课程类型" maxW={{ base: 'full', md: '200px' }}>
+        <option value="basic">基础课程</option>
+        <option value="advanced">进阶课程</option>
+        <option value="practical">实操指南</option>
+      </Select>
+
+      <Button colorScheme="blue">
+        筛选
+      </Button>
+    </Stack>
   );
 } 

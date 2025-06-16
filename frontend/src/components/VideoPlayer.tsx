@@ -23,18 +23,11 @@ import {
 interface VideoPlayerProps {
   src: string;
   title: string;
-  onProgressUpdate?: (progress: number) => void;
-  onComplete?: () => void;
-  startTime?: number;
+  onProgressUpdate: (progress: number) => void;
+  onComplete: () => void;
 }
 
-export function VideoPlayer({
-  src,
-  title,
-  onProgressUpdate,
-  onComplete,
-  startTime = 0,
-}: VideoPlayerProps) {
+export default function VideoPlayer({ src, title, onProgressUpdate, onComplete }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -46,42 +39,23 @@ export function VideoPlayer({
   const controlsTimeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = startTime;
-    }
-  }, [startTime]);
-
-  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     const handleTimeUpdate = () => {
-      setCurrentTime(video.currentTime);
-      onProgressUpdate?.(video.currentTime);
-      
-      // 检查是否完成观看（进度超过95%）
-      if (video.currentTime / video.duration > 0.95) {
-        onComplete?.();
+      const progress = (video.currentTime / video.duration) * 100;
+      onProgressUpdate(progress);
+      if (progress >= 99.5) {
+        onComplete();
       }
     };
 
-    const handleLoadedMetadata = () => {
-      setDuration(video.duration);
-    };
-
-    const handleEnded = () => {
-      setIsPlaying(false);
-      onComplete?.();
-    };
-
     video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
-    video.addEventListener('ended', handleEnded);
+    video.addEventListener('ended', onComplete);
 
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('ended', onComplete);
     };
   }, [onProgressUpdate, onComplete]);
 
@@ -152,20 +126,16 @@ export function VideoPlayer({
   };
 
   return (
-    <Box
-      position="relative"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => isPlaying && setShowControls(false)}
-    >
+    <Box borderRadius="lg" overflow="hidden">
       <AspectRatio ratio={16 / 9}>
-        <video
+        <Box
+          as="video"
           ref={videoRef}
           src={src}
-          onClick={handlePlayPause}
+          title={title}
+          controls
           style={{ width: '100%', height: '100%' }}
-        >
-          <track kind="captions" />
-        </video>
+        />
       </AspectRatio>
 
       {/* 视频控制栏 */}

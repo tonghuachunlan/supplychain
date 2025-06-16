@@ -1,22 +1,35 @@
-import { Box, Image, Text, Stack, Badge, Button, HStack, Icon } from '@chakra-ui/react';
-import { FiClock, FiUsers, FiStar } from 'react-icons/fi';
+import {
+  Box,
+  Image,
+  Badge,
+  Text,
+  Stack,
+  Heading,
+  Button,
+  HStack,
+  Icon,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Course } from '../api/services/course.service';
+import { FiClock, FiUsers, FiStar } from 'react-icons/fi';
+import { Course } from '../services/course.service';
 
 interface CourseCardProps {
   course: Course;
 }
 
-export function CourseCard({ course }: CourseCardProps) {
+export default function CourseCard({ course }: CourseCardProps) {
+  const cardBg = useColorModeValue('white', 'gray.700');
+  const textColor = useColorModeValue('gray.600', 'gray.300');
+
   return (
     <Box
-      maxW="sm"
-      borderWidth="1px"
+      bg={cardBg}
       borderRadius="lg"
       overflow="hidden"
-      bg="white"
-      transition="all 0.2s"
-      _hover={{ transform: 'translateY(-4px)', shadow: 'lg' }}
+      boxShadow="sm"
+      transition="all 0.3s"
+      _hover={{ transform: 'translateY(-4px)', boxShadow: 'md' }}
     >
       <Image
         src={course.coverImage}
@@ -24,72 +37,57 @@ export function CourseCard({ course }: CourseCardProps) {
         height="200px"
         width="100%"
         objectFit="cover"
-        fallbackSrc="https://via.placeholder.com/400x200?text=课程封面"
       />
 
-      <Box p="6">
-        <Box display="flex" alignItems="baseline">
-          <Badge borderRadius="full" px="2" colorScheme="brand">
-            NEW
-          </Badge>
-          <Box
-            color="gray.500"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            fontSize="xs"
-            textTransform="uppercase"
-            ml="2"
-          >
-            {course.instructor.name}
-          </Box>
-        </Box>
+      <Stack p={4} spacing={3}>
+        <HStack>
+          <Badge colorScheme="blue">{course.stage.level}</Badge>
+          {course.isEnrolled && <Badge colorScheme="green">已报名</Badge>}
+        </HStack>
 
-        <Text
-          mt="2"
-          fontWeight="semibold"
-          as="h4"
-          lineHeight="tight"
-          noOfLines={2}
-          fontSize="lg"
-        >
+        <Heading size="md" noOfLines={2}>
           {course.title}
-        </Text>
+        </Heading>
 
-        <Text mt="2" color="gray.600" fontSize="sm" noOfLines={2}>
+        <Text color={textColor} noOfLines={2}>
           {course.description}
         </Text>
 
-        <Stack mt="4" spacing={2}>
-          <HStack spacing={4} fontSize="sm" color="gray.600">
-            <HStack>
-              <Icon as={FiClock} />
-              <Text>{Math.round(course.duration / 60)} 小时</Text>
-            </HStack>
-            <HStack>
-              <Icon as={FiUsers} />
-              <Text>{course.enrolledCount} 人已报名</Text>
-            </HStack>
-            <HStack>
-              <Icon as={FiStar} />
-              <Text>{course.rating.toFixed(1)}</Text>
-            </HStack>
-          </HStack>
-
-          <HStack justify="space-between" align="center">
-            <Text fontWeight="bold" fontSize="lg" color="brand.500">
-              ¥ {course.price.toFixed(2)}
+        <HStack spacing={4}>
+          <HStack>
+            <Icon as={FiClock} color="gray.500" />
+            <Text fontSize="sm" color="gray.500">
+              {course.duration}分钟
             </Text>
-            <Button
-              as={RouterLink}
-              to={`/courses/${course.id}`}
-              colorScheme="brand"
-              size="sm"
-            >
-              查看详情
-            </Button>
           </HStack>
-        </Stack>
-      </Box>
+          <HStack>
+            <Icon as={FiUsers} color="gray.500" />
+            <Text fontSize="sm" color="gray.500">
+              {course.enrolledCount}人
+            </Text>
+          </HStack>
+          <HStack>
+            <Icon as={FiStar} color="gray.500" />
+            <Text fontSize="sm" color="gray.500">
+              {course.rating}
+            </Text>
+          </HStack>
+        </HStack>
+
+        <HStack justify="space-between" align="center">
+          <Text fontWeight="bold" fontSize="lg" color="blue.500">
+            ¥{course.price}
+          </Text>
+          <Button
+            as={RouterLink}
+            to={`/academy/courses/${course.id}`}
+            colorScheme="blue"
+            size="sm"
+          >
+            {course.isEnrolled ? '继续学习' : '查看详情'}
+          </Button>
+        </HStack>
+      </Stack>
     </Box>
   );
 } 

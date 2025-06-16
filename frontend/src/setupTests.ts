@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom';
 import { configure } from '@testing-library/react';
 import 'jest-environment-jsdom';
+import { expect, afterEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import matchers from '@testing-library/jest-dom/matchers';
 
 // Configure testing-library
 configure({
@@ -23,14 +26,22 @@ Object.defineProperty(window, 'IntersectionObserver', {
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
   })),
+});
+
+// 扩展 Vitest 的 expect 方法
+expect.extend(matchers);
+
+// 每个测试后清理
+afterEach(() => {
+  cleanup();
 }); 

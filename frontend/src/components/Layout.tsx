@@ -1,14 +1,19 @@
 import { Box } from '@chakra-ui/react';
-import { Outlet } from 'react-router-dom';
-import Navbar from './Navbar';
+import MainNav from './MainNav';
+import Footer from './Footer';
 
-export default function Layout() {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
-    <Box minH="100vh">
-      <Navbar />
-      <Box as="main" p={4}>
-        <Outlet />
+    <Box minH="100vh" display="flex" flexDirection="column">
+      <MainNav />
+      <Box flex="1">
+        {children}
       </Box>
+      <Footer />
     </Box>
   );
 } 

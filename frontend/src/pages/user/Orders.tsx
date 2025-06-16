@@ -1,7 +1,6 @@
 import {
   Box,
   Container,
-  Heading,
   Stack,
   Table,
   Thead,
@@ -17,8 +16,10 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { apiService } from '../services/api';
-import { Order } from '../types';
+import { Link as RouterLink } from 'react-router-dom';
+import PageTemplate from '../../components/PageTemplate';
+import { Order } from '../../types';
+import { orderService } from '../../services/order.service';
 
 const statusMap = {
   pending: { label: '待支付', color: 'yellow' },
@@ -35,17 +36,15 @@ export default function Orders() {
   const { data: orders, refetch } = useQuery({
     queryKey: ['orders', status],
     queryFn: async () => {
-      const response = await apiService.get<Order[]>('/orders', {
-        params: { status },
-      });
-      return response.data;
+      const response = await orderService.getUserOrders(status);
+      return response;
     },
   });
 
   // 验证支付状态
   const verifyMutation = useMutation({
     mutationFn: async (orderId: string) => {
-      return apiService.post(`/orders/${orderId}/verify-payment`);
+      return orderService.verifyPayment(orderId);
     },
     onSuccess: () => {
       refetch();
@@ -70,7 +69,7 @@ export default function Orders() {
   // 申请退款
   const refundMutation = useMutation({
     mutationFn: async (orderId: string) => {
-      return apiService.post(`/orders/${orderId}/refund`);
+      return orderService.requestRefund(orderId);
     },
     onSuccess: () => {
       refetch();
@@ -101,12 +100,17 @@ export default function Orders() {
   };
 
   return (
-    <Container maxW="container.xl" py={8}>
-      <Stack spacing={8}>
+    <PageTemplate
+      title="我的订单"
+      subtitle="管理您的课程订单"
+      breadcrumbs={[
+        { title: '用户中心', link: '/user' },
+        { title: '我的订单' },
+      ]}
+    >
+      <Stack spacing={6}>
+        {/* 筛选器 */}
         <Box>
-          <Heading size="xl" mb={4}>
-            我的订单
-          </Heading>
           <Select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
@@ -122,6 +126,7 @@ export default function Orders() {
           </Select>
         </Box>
 
+        {/* 订单列表 */}
         {orders?.length === 0 ? (
           <Text>暂无订单</Text>
         ) : (
@@ -139,7 +144,7 @@ export default function Orders() {
               </Thead>
               <Tbody>
                 {orders?.map((order) => (
-                  <Tr key={order._id}>
+                  <Tr key={order.id}>
                     <Td>{order.orderNumber}</Td>
                     <Td>{order.course.title}</Td>
                     <Td>¥{order.amount}</Td>
@@ -157,17 +162,17 @@ export default function Orders() {
                           <>
                             <Button
                               size="sm"
-                              colorScheme="brand"
+                              colorScheme="blue"
                               onClick={() =>
-                                handleVerifyPayment(order._id)
+                                handleVerifyPayment(order.id)
                               }
                               isLoading={verifyMutation.isLoading}
                             >
                               验证支付
                             </Button>
                             <Button
-                              as="a"
-                              href={`/pay/${order.orderNumber}`}
+                              as={RouterLink}
+                              to={`/pay/${order.orderNumber}`}
                               size="sm"
                               variant="outline"
                             >
@@ -180,7 +185,7 @@ export default function Orders() {
                             size="sm"
                             colorScheme="red"
                             variant="outline"
-                            onClick={() => handleRefund(order._id)}
+                            onClick={() => handleRefund(order.id)}
                             isLoading={refundMutation.isLoading}
                           >
                             申请退款
@@ -195,6 +200,6 @@ export default function Orders() {
           </Box>
         )}
       </Stack>
-    </Container>
+    </PageTemplate>
   );
 } 

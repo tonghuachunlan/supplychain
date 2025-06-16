@@ -1,123 +1,91 @@
 import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Box,
-  Text,
+  VStack,
   HStack,
+  Text,
   Icon,
-  Progress,
-  Badge,
+  Button,
+  useColorModeValue,
 } from '@chakra-ui/react';
-import { FiClock, FiPlay, FiLock } from 'react-icons/fi';
-import { Chapter } from '../api/services/course.service';
+import { FiPlay, FiCheck, FiLock } from 'react-icons/fi';
+import { Link as RouterLink } from 'react-router-dom';
+
+interface Chapter {
+  id: string;
+  title: string;
+  duration: string;
+  status: 'completed' | 'current' | 'locked';
+}
 
 interface CourseOutlineProps {
   chapters: Chapter[];
-  currentChapterId?: string;
-  completedChapters?: string[];
-  isEnrolled?: boolean;
+  currentChapterId: string;
+  isEnrolled: boolean;
 }
 
-export function CourseOutline({
+export default function CourseOutline({
   chapters,
   currentChapterId,
-  completedChapters = [],
-  isEnrolled = false,
+  isEnrolled,
 }: CourseOutlineProps) {
-  const formatDuration = (duration: number) => {
-    const minutes = Math.floor(duration / 60);
-    const seconds = duration % 60;
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-  const getChapterStatus = (chapterId: string) => {
-    if (completedChapters.includes(chapterId)) {
-      return 'completed';
-    }
-    if (currentChapterId === chapterId) {
-      return 'current';
-    }
-    return 'pending';
-  };
-
-  const calculateProgress = () => {
-    return (completedChapters.length / chapters.length) * 100;
-  };
+  const bgColor = useColorModeValue('white', 'gray.700');
+  const borderColor = useColorModeValue('gray.200', 'gray.600');
+  const hoverBg = useColorModeValue('gray.50', 'gray.600');
 
   return (
-    <Box bg="white" borderRadius="lg" shadow="sm">
-      {isEnrolled && (
-        <Box p={4} borderBottom="1px" borderColor="gray.100">
-          <Text mb={2} fontWeight="medium">
-            学习进度
-          </Text>
-          <Progress
-            value={calculateProgress()}
-            size="sm"
-            colorScheme="brand"
-            borderRadius="full"
-          />
-          <Text mt={2} fontSize="sm" color="gray.600">
-            已完成 {completedChapters.length} / {chapters.length} 章节
-          </Text>
-        </Box>
-      )}
+    <Box
+      bg={bgColor}
+      borderWidth="1px"
+      borderColor={borderColor}
+      borderRadius="lg"
+      overflow="hidden"
+    >
+      <VStack spacing={0} align="stretch" divider={<Box borderColor={borderColor} borderBottomWidth="1px" />}>
+        {chapters.map((chapter) => {
+          const isCurrent = chapter.id === currentChapterId;
+          const isCompleted = chapter.status === 'completed';
+          const isLocked = chapter.status === 'locked';
 
-      <Accordion allowMultiple defaultIndex={[0]}>
-        {chapters.map((chapter, index) => (
-          <AccordionItem key={chapter.id} border="0">
-            <AccordionButton
-              py={4}
-              px={4}
-              _hover={{ bg: 'gray.50' }}
-              borderBottom="1px"
-              borderColor="gray.100"
+          return (
+            <Box
+              key={chapter.id}
+              p={4}
+              bg={isCurrent ? 'blue.50' : undefined}
+              _hover={{ bg: isLocked ? undefined : hoverBg }}
+              transition="background 0.2s"
             >
-              <HStack flex="1" spacing={4}>
-                <Text fontWeight="medium" color="gray.700">
-                  {index + 1}. {chapter.title}
-                </Text>
-                {getChapterStatus(chapter.id) === 'completed' && (
-                  <Badge colorScheme="green">已完成</Badge>
-                )}
-                {getChapterStatus(chapter.id) === 'current' && (
-                  <Badge colorScheme="blue">学习中</Badge>
+              <HStack spacing={4}>
+                <Icon
+                  as={isCompleted ? FiCheck : isLocked ? FiLock : FiPlay}
+                  color={isCompleted ? 'green.500' : isLocked ? 'gray.400' : 'blue.500'}
+                />
+                <VStack align="start" spacing={1} flex={1}>
+                  <Text
+                    fontWeight={isCurrent ? 'bold' : 'normal'}
+                    color={isLocked ? 'gray.400' : undefined}
+                  >
+                    {chapter.title}
+                  </Text>
+                  <Text fontSize="sm" color="gray.500">
+                    {chapter.duration}
+                  </Text>
+                </VStack>
+                {!isLocked && isEnrolled && (
+                  <Button
+                    as={RouterLink}
+                    to={`/learn/${chapter.id}`}
+                    size="sm"
+                    variant="ghost"
+                    colorScheme="blue"
+                  >
+                    {isCompleted ? '复习' : '学习'}
+                  </Button>
                 )}
               </HStack>
-              <AccordionIcon />
-            </AccordionButton>
-
-            <AccordionPanel pb={4} bg="gray.50">
-              <Box>
-                <Text color="gray.600" fontSize="sm" mb={3}>
-                  {chapter.description}
-                </Text>
-                <HStack spacing={4} fontSize="sm" color="gray.500">
-                  <HStack>
-                    <Icon as={FiClock} />
-                    <Text>{formatDuration(chapter.duration)}</Text>
-                  </HStack>
-                  {!isEnrolled && (
-                    <HStack color="brand.500">
-                      <Icon as={FiLock} />
-                      <Text>需要报名</Text>
-                    </HStack>
-                  )}
-                  {isEnrolled && (
-                    <HStack color="brand.500">
-                      <Icon as={FiPlay} />
-                      <Text>开始学习</Text>
-                    </HStack>
-                  )}
-                </HStack>
-              </Box>
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion>
+            </Box>
+          );
+        })}
+      </VStack>
     </Box>
   );
 } 

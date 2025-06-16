@@ -17,25 +17,24 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
-import { courseService, paymentService } from '../api/services';
-import { useNavigate } from 'react-router-dom';
+import { courseService } from '../api/services/course.service';
 
 interface EnrollButtonProps {
   courseId: string;
   price: number;
-  isEnrolled: boolean;
+  isEnrolled?: boolean;
 }
 
-export function EnrollButton({ courseId, price, isEnrolled }: EnrollButtonProps) {
+export default function EnrollButton({ courseId, price, isEnrolled = false }: EnrollButtonProps) {
   const [paymentMethod, setPaymentMethod] = useState<'alipay' | 'wechat' | 'creditcard'>('alipay');
   const [isProcessing, setIsProcessing] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const navigate = useNavigate();
 
   const handleEnroll = async () => {
     if (isEnrolled) {
-      navigate(`/courses/${courseId}/learn`);
+      // 已报名，直接跳转到学习页面
+      window.location.href = `/courses/${courseId}/learn`;
       return;
     }
     onOpen();
@@ -45,36 +44,13 @@ export function EnrollButton({ courseId, price, isEnrolled }: EnrollButtonProps)
     try {
       setIsProcessing(true);
       
-      // 创建订单
-      const order = await paymentService.createOrder({
-        courseId,
-        paymentMethod,
-      });
-
-      // 根据支付方式处理支付
-      let paymentResult;
-      switch (paymentMethod) {
-        case 'alipay':
-          paymentResult = await paymentService.alipayOrder(order.id);
-          // 跳转到支付宝支付页面
-          window.location.href = paymentResult.payUrl;
-          break;
-        
-        case 'wechat':
-          paymentResult = await paymentService.wechatOrder(order.id);
-          // 显示微信支付二维码
-          // TODO: 实现二维码显示逻辑
-          break;
-        
-        case 'creditcard':
-          // TODO: 实现信用卡支付表单
-          break;
-      }
-
-      onClose();
+      // 模拟支付过程
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // 报名课程
-      await courseService.enrollCourse(courseId);
+      // 模拟报名课程
+      await courseService.enroll(courseId);
+      
+      onClose();
       
       toast({
         title: '报名成功',
@@ -84,11 +60,11 @@ export function EnrollButton({ courseId, price, isEnrolled }: EnrollButtonProps)
       });
       
       // 跳转到学习页面
-      navigate(`/courses/${courseId}/learn`);
+      window.location.href = `/courses/${courseId}/learn`;
     } catch (error: any) {
       toast({
         title: '支付失败',
-        description: error.message,
+        description: error.message || '请稍后重试',
         status: 'error',
         duration: 5000,
       });
@@ -101,10 +77,11 @@ export function EnrollButton({ courseId, price, isEnrolled }: EnrollButtonProps)
     <>
       <Button
         size="lg"
-        colorScheme="brand"
+        colorScheme="blue"
         leftIcon={<FiShoppingCart />}
         onClick={handleEnroll}
         isLoading={isProcessing}
+        width="100%"
       >
         {isEnrolled ? '继续学习' : '立即报名'}
       </Button>
@@ -158,7 +135,7 @@ export function EnrollButton({ courseId, price, isEnrolled }: EnrollButtonProps)
               </RadioGroup>
 
               <Button
-                colorScheme="brand"
+                colorScheme="blue"
                 size="lg"
                 onClick={handlePayment}
                 isLoading={isProcessing}
