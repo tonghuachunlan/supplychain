@@ -14,9 +14,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "concurrently \"cd backend && npm run format\" \"cd frontend && npm run format\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update-progress": "./scripts/update-progress.sh",
+    "progress": "npm run update-progress"
   },
   "keywords": [
     "supply chain",
@@ -57,10 +59,17 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@types/lodash": "^4.17.17",
+    "axios": "^1.10.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "framer-motion": "^11.0.3",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "mongoose": "^8.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.2"
   }
