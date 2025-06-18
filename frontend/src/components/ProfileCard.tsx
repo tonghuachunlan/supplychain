@@ -18,7 +18,7 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { FiEdit2, FiMail, FiPhone, FiUser } from 'react-icons/fi';
+import { FiEdit2, FiMail, FiPhone } from 'react-icons/fi';
 
 interface ProfileCardProps {
   user: {

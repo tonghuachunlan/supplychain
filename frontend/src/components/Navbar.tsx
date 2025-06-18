@@ -1,34 +1,20 @@
 import {
   Box,
   Button,
-  Container,
   Flex,
-  HStack,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  useColorMode,
-  useDisclosure,
-  Avatar,
-  Text,
-  Stack,
   Link,
   Spacer,
+  Text,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function Navbar() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onToggle } = useDisclosure();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/login');
   };
 
@@ -39,14 +25,27 @@ export default function Navbar() {
           供应链思维学院
         </Link>
         <Spacer />
-        <Flex gap={4}>
+        <Flex gap={4} align="center">
           <Link as={RouterLink} to="/courses">课程</Link>
-          <Link as={RouterLink} to="/login">
-            <Button colorScheme="whiteAlpha">登录</Button>
-          </Link>
-          <Link as={RouterLink} to="/register">
-            <Button colorScheme="whiteAlpha" variant="outline">注册</Button>
-          </Link>
+          {user ? (
+            <>
+              <Link as={RouterLink} to="/profile">
+                <Text>欢迎, {user.username}</Text>
+              </Link>
+              <Button colorScheme="whiteAlpha" variant="outline" onClick={handleLogout}>
+                退出
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link as={RouterLink} to="/login">
+                <Button colorScheme="whiteAlpha">登录</Button>
+              </Link>
+              <Link as={RouterLink} to="/register">
+                <Button colorScheme="whiteAlpha" variant="outline">注册</Button>
+              </Link>
+            </>
+          )}
         </Flex>
       </Flex>
     </Box>

@@ -10,9 +10,9 @@ import { ProfileCard } from "../components/ProfileCard";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Profile() {
-  const { user, loading } = useAuth();
+  const { user, isLoading } = useAuth();
 
-  if (loading || !user) {
+  if (isLoading || !user) {
     return (
       <Box textAlign="center" mt="20">
         <Spinner size="xl" />
@@ -21,12 +21,17 @@ export default function Profile() {
   }
 
   const enhancedUser = {
-    ...user,
     id: user.id || "",
-    name: user.name || user.username || "用户",
+    name: user.username || "用户",
     email: user.email || "",
-    avatar: user.avatar,
-    joinDate: user.joinDate || new Date().toISOString(),
+    joinDate: new Date().toISOString(),
+  };
+
+  const handleUpdate = async (data: Partial<typeof enhancedUser>) => {
+    // 在这里实现更新逻辑, 例如调用API
+    console.log("Updating user data:", data);
+    // 模拟API调用
+    await new Promise(resolve => setTimeout(resolve, 1000));
   };
 
   return (
@@ -35,7 +40,7 @@ export default function Profile() {
         <Grid templateColumns={{ base: "1fr", lg: "1fr 3fr" }} gap={8}>
           <GridItem>
             <VStack spacing={8}>
-              <ProfileCard user={enhancedUser} onUpdate={() => {}} />
+              <ProfileCard user={enhancedUser} onUpdate={handleUpdate} />
             </VStack>
           </GridItem>
           <GridItem>

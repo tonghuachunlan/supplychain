@@ -12,7 +12,7 @@ import {
   Badge,
 } from '@chakra-ui/react';
 import { FiClock, FiPlay, FiLock } from 'react-icons/fi';
-import { Chapter } from '../api/services/course.service';
+import type { Chapter } from '../api/services/course.service';
 
 interface CourseOutlineProps {
   chapters: Chapter[];
@@ -92,9 +92,6 @@ export function CourseOutline({
 
             <AccordionPanel pb={4} bg="gray.50">
               <Box>
-                <Text color="gray.600" fontSize="sm" mb={3}>
-                  {chapter.description}
-                </Text>
                 <HStack spacing={4} fontSize="sm" color="gray.500">
                   <HStack>
                     <Icon as={FiClock} />

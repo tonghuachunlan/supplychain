@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import {
   Box,
-  Button,
   Progress,
   Text,
   VStack,
@@ -9,7 +8,8 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { useDropzone } from 'react-dropzone';
-import { FiUpload, FiFile, FiX } from 'react-icons/fi';
+import type { Accept } from 'react-dropzone';
+import { FiUpload } from 'react-icons/fi';
 import { captureError } from '../../utils/monitoring';
 
 interface FileUploadProps {
@@ -57,9 +57,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
     }
   }, [onUpload, toast]);
 
+  const accept = acceptedFileTypes.reduce((acc, type) => {
+    acc[type] = [];
+    return acc;
+  }, {} as Accept);
+
   const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
     onDrop,
-    accept: acceptedFileTypes.join(','),
+    accept,
     maxSize,
     multiple,
   });

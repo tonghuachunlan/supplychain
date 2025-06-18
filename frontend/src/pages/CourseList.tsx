@@ -18,7 +18,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { FiUsers, FiClock } from 'react-icons/fi';
 import { useQuery } from '@tanstack/react-query';
 import { apiService } from '../services/api';
-import { Course } from '../types';
+import type { Course } from '../types';
 
 const categories = [
   { value: '', label: '全部分类' },

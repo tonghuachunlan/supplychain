@@ -6,7 +6,6 @@ import {
   GridItem,
   VStack,
   Heading,
-  Text,
   Button,
   useToast,
   Alert,
@@ -26,11 +25,12 @@ import { FiMenu } from 'react-icons/fi';
 import { VideoPlayer } from '../components/VideoPlayer';
 import { CourseOutline } from '../components/CourseOutline';
 import { courseService } from '../api/services';
+import type { Course, Chapter } from '../api/services/course.service';
 
 export default function CourseLearning() {
   const { courseId, chapterId } = useParams<{ courseId: string; chapterId: string }>();
-  const [course, setCourse] = useState<any>(null);
-  const [currentChapter, setCurrentChapter] = useState<any>(null);
+  const [course, setCourse] = useState<Course | null>(null);
+  const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, lg: false });
@@ -45,7 +45,7 @@ export default function CourseLearning() {
 
   useEffect(() => {
     if (course && chapterId && course.chapters?.length > 0) {
-      const chapterExists = course.chapters.find((c: any) => c.id === chapterId);
+      const chapterExists = course.chapters.find((c: Chapter) => c.id === chapterId);
       if (!chapterExists) {
         navigate(`/courses/${courseId}/learn/${course.chapters[0].id}`);
       } else {
@@ -97,7 +97,7 @@ export default function CourseLearning() {
       <CourseOutline
         chapters={course.chapters}
         currentChapterId={currentChapter.id}
-        completedChapters={course.completedChapters || []}
+        completedChapters={[]}
         isEnrolled={true}
       />
     </VStack>
@@ -121,8 +121,7 @@ export default function CourseLearning() {
 
               <Box bg="white" p={4} borderRadius="lg" shadow="sm">
                 <VideoPlayer
-                  videoUrl={currentChapter.videoUrl}
-                  title={currentChapter.title}
+                  videoUrl={""}
                 />
               </Box>
 
@@ -130,7 +129,6 @@ export default function CourseLearning() {
                 <Heading as="h1" size="lg" mb={2}>
                   {currentChapter.title}
                 </Heading>
-                <Text color="gray.600">{currentChapter.description}</Text>
               </Box>
             </VStack>
           </GridItem>

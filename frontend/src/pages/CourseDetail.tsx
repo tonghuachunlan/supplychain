@@ -61,8 +61,7 @@ const CourseDetail = () => {
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
           <GridItem colSpan={{ base: 1, md: 2 }}>
             <VideoPlayer
-              videoUrl={course.chapters[0]?.videoUrl || ""}
-              title={course.chapters[0]?.title || ""}
+              videoUrl={""}
             />
           </GridItem>
           <GridItem>

@@ -21,16 +21,14 @@ import {
 } from 'react-icons/fi';
 
 interface VideoPlayerProps {
-  src: string;
-  title: string;
+  videoUrl: string;
   onProgressUpdate?: (progress: number) => void;
   onComplete?: () => void;
   startTime?: number;
 }
 
 export function VideoPlayer({
-  src,
-  title,
+  videoUrl,
   onProgressUpdate,
   onComplete,
   startTime = 0,
@@ -160,7 +158,7 @@ export function VideoPlayer({
       <AspectRatio ratio={16 / 9}>
         <video
           ref={videoRef}
-          src={src}
+          src={videoUrl}
           onClick={handlePlayPause}
           style={{ width: '100%', height: '100%' }}
         >
