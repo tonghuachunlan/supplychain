@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { FiMoreVertical, FiPlay, FiClock } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-import { Course } from '../api/services/course.service';
+import type { Course } from '../api/services/course.service';
 
 interface MyCourseListProps {
   courses: (Course & {
@@ -101,7 +101,7 @@ export function MyCourseList({ courses, onRemove }: MyCourseListProps) {
               _hover={{ transform: 'translateY(-4px)', shadow: 'md' }}
             >
               <Image
-                src={course.coverImage}
+                src={course.thumbnail}
                 alt={course.title}
                 height="160px"
                 width="100%"

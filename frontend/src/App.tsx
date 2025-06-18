@@ -10,11 +10,10 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import CourseList from './pages/CourseList';
+import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
 import CourseLearning from './pages/CourseLearning';
 import Profile from './pages/Profile';
-import Orders from './pages/Orders';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,20 +31,17 @@ function App() {
         <AuthProvider>
           <Router>
             <Routes>
-              {/* 公开路由 */}
               <Route path="/" element={<Layout />}>
+                {/* Public Routes */}
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
-                <Route path="courses" element={<CourseList />} />
-                <Route path="courses/:courseId" element={<CourseDetail />} />
-              </Route>
+                <Route path="courses" element={<Courses />} />
+                <Route path="courses/:id" element={<CourseDetail />} />
 
-              {/* 需要认证的路由 */}
-              <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-                <Route path="courses/:courseId/learn" element={<CourseLearning />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="orders" element={<Orders />} />
+                {/* Protected Routes */}
+                <Route path="courses/:courseId/learn/:chapterId" element={<ProtectedRoute><CourseLearning /></ProtectedRoute>} />
+                <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               </Route>
             </Routes>
           </Router>

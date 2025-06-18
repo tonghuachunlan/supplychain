@@ -1,7 +1,7 @@
 import { Box, Image, Text, Stack, Badge, Button, HStack, Icon } from '@chakra-ui/react';
 import { FiClock, FiUsers, FiStar } from 'react-icons/fi';
 import { Link as RouterLink } from 'react-router-dom';
-import { Course } from '../api/services/course.service';
+import type { Course } from '../api/services/course.service';
 
 interface CourseCardProps {
   course: Course;
@@ -19,7 +19,7 @@ export function CourseCard({ course }: CourseCardProps) {
       _hover={{ transform: 'translateY(-4px)', shadow: 'lg' }}
     >
       <Image
-        src={course.coverImage}
+        src={course.thumbnail}
         alt={course.title}
         height="200px"
         width="100%"
@@ -40,7 +40,7 @@ export function CourseCard({ course }: CourseCardProps) {
             textTransform="uppercase"
             ml="2"
           >
-            {course.instructor.name}
+            {course.instructor}
           </Box>
         </Box>
 
@@ -63,7 +63,7 @@ export function CourseCard({ course }: CourseCardProps) {
           <HStack spacing={4} fontSize="sm" color="gray.600">
             <HStack>
               <Icon as={FiClock} />
-              <Text>{Math.round(course.duration / 60)} 小时</Text>
+              <Text>{Math.round(course.totalDuration / 60)} 分钟</Text>
             </HStack>
             <HStack>
               <Icon as={FiUsers} />
