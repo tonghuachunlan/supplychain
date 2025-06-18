@@ -1,36 +1,37 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import { config } from '../config';
+import { verifyToken } from '../utils/jwt';
+import { User } from '../models/user.model';
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {
-        id: string;
-        email: string;
-        role: string;
-      };
-    }
-  }
-}
-
-export const auth = async (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-
-    if (!token) {
-      throw new Error();
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      res.status(401).json({ message: '未提供认证令牌' });
+      return;
     }
 
-    const decoded = jwt.verify(token, config.jwtSecret) as {
-      id: string;
-      email: string;
-      role: string;
+    const token = authHeader.split(' ')[1];
+    const decoded = verifyToken(token);
+    if (!decoded) {
+      res.status(401).json({ message: '无效的认证令牌' });
+      return;
+    }
+
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      res.status(401).json({ message: '用户不存在' });
+      return;
+    }
+
+    req.user = {
+      id: user._id.toString(),
+      email: user.email,
+      isAdmin: user.isAdmin,
+      isEnterprise: user.isEnterprise,
     };
 
-    req.user = decoded;
     next();
   } catch (error) {
-    res.status(401).json({ message: '请先登录' });
+    next(error);
   }
 }; 

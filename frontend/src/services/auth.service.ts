@@ -2,55 +2,70 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8000/api';
 
+// 创建 axios 实例
+const apiClient = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 export interface User {
   id: string;
   username: string;
   email: string;
+  isAdmin?: boolean;
+  isEnterprise?: boolean;
 }
 
 export interface AuthResponse {
   user: User;
+  message: string;
   accessToken: string;
-  refreshToken: string;
 }
 
 export const authService = {
-  async register(data: { username: string; email: string; password: string }): Promise<AuthResponse> {
-    // 在实际API准备好之前，使用模拟数据
-    await new Promise(resolve => setTimeout(resolve, 1000)); // 模拟API延迟
-    
-    // 模拟成功响应
-    return {
-      user: {
-        id: '1',
-        username: data.username,
-        email: data.email,
-      },
-      accessToken: 'mock_access_token',
-      refreshToken: 'mock_refresh_token',
-    };
-  },
-
-  async login(data: { email: string; password: string }): Promise<AuthResponse> {
-    const response = await axios.post(`${API_URL}/auth/login`, data);
+  async register(data: { username: string; email: string; password: string; confirmPassword?: string; agreeToTerms?: boolean }): Promise<AuthResponse> {
+    const { confirmPassword, agreeToTerms, ...registerData } = data;
+    const response = await apiClient.post<AuthResponse>('/auth/register', registerData);
+    if (response.data.accessToken) {
+      localStorage.setItem('accessToken', response.data.accessToken);
+    }
     return response.data;
   },
 
-  async refreshToken(token: string): Promise<AuthResponse> {
-    const response = await axios.post(`${API_URL}/auth/refresh`, { token });
+  async login(data: { email: string; password: string }): Promise<AuthResponse> {
+    const response = await apiClient.post<AuthResponse>('/auth/login', data);
+    if (response.data.accessToken) {
+      localStorage.setItem('accessToken', response.data.accessToken);
+    }
     return response.data;
   },
 
   async logout(): Promise<void> {
-    await axios.post(`${API_URL}/auth/logout`);
+    try {
+      await apiClient.post('/auth/logout');
+    } finally {
+      localStorage.removeItem('accessToken');
+    }
   },
 
   async getCurrentUser(): Promise<User | null> {
     try {
-      const response = await axios.get(`${API_URL}/auth/me`);
-      return response.data;
-    } catch {
+      const token = localStorage.getItem('accessToken');
+      if (!token) return null;
+      
+      const response = await apiClient.get<{user: User}>('/auth/me', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return response.data.user;
+    } catch (error) {
+      localStorage.removeItem('accessToken');
       return null;
     }
+  },
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('accessToken');
   }
 }; 

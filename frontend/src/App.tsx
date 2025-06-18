@@ -11,10 +11,11 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
-// 已实现的课程相关页面
+// 课程相关页面
 import CourseList from './pages/courses/CourseList';
-import CourseDetail from './pages/courses/CourseDetail';
+import CourseDetail from './pages/course/CourseDetail';
 import CourseLearning from './pages/courses/CourseLearning';
+import CourseQA from './pages/course/CourseQA';
 
 // 行业动态
 import IndustryNews from './pages/industry/IndustryNews';
@@ -22,13 +23,14 @@ import PolicyAnalysis from './pages/industry/PolicyAnalysis';
 import TechnologyTrends from './pages/industry/TechnologyTrends';
 import CaseStudies from './pages/industry/CaseStudies';
 
-// 专家观点（待实现）
+// 专家观点
 import ExpertColumns from './pages/expert/ExpertColumns';
 import DeepArticles from './pages/expert/DeepArticles';
 import Solutions from './pages/expert/Solutions';
-import ExpertQA from './pages/expert/ExpertQA';
+import ExpertQA from './pages/qa/ExpertQA';
+import ExpertDetail from './pages/expert/ExpertDetail';
 
-// 供应链学院（整合已有课程系统）
+// 供应链学院
 import AcademyHome from './pages/academy/Home';
 import BasicCourses from './pages/academy/BasicCourses';
 import AdvancedCourses from './pages/academy/AdvancedCourses';
@@ -44,8 +46,6 @@ import Standards from './pages/resources/Standards';
 // 用户中心
 import UserProfile from './pages/user/Profile';
 import LearningRecords from './pages/user/LearningRecords';
-import Favorites from './pages/user/Favorites';
-import Interactions from './pages/user/Interactions';
 import Enterprise from './pages/user/Enterprise';
 import Orders from './pages/user/Orders';
 
@@ -95,14 +95,17 @@ function App() {
                 <Route path="academy">
                   <Route index element={<AcademyHome />} />
                   <Route path="courses" element={<CourseList />} />
-                  <Route path="courses/:courseId" element={<CourseDetail />} />
-                  <Route path="courses/:courseId/learn" 
-                    element={<ProtectedRoute><CourseLearning /></ProtectedRoute>} 
-                  />
                   <Route path="basic" element={<BasicCourses />} />
                   <Route path="advanced" element={<AdvancedCourses />} />
                   <Route path="guides" element={<PracticalGuides />} />
                   <Route path="paths" element={<LearningPaths />} />
+                </Route>
+
+                {/* 课程相关页面 */}
+                <Route path="course">
+                  <Route path=":courseId" element={<CourseDetail />} />
+                  <Route path=":courseId/learn" element={<ProtectedRoute><CourseLearning /></ProtectedRoute>} />
+                  <Route path=":courseId/qa" element={<CourseQA />} />
                 </Route>
 
                 {/* 专家观点 */}
@@ -111,7 +114,12 @@ function App() {
                   <Route path="columns" element={<ExpertColumns />} />
                   <Route path="articles" element={<DeepArticles />} />
                   <Route path="solutions" element={<Solutions />} />
-                  <Route path="qa" element={<ExpertQA />} />
+                  <Route path=":expertId" element={<ExpertDetail />} />
+                </Route>
+
+                {/* 问答相关页面 */}
+                <Route path="qa">
+                  <Route path="expert/:expertId" element={<ExpertQA />} />
                 </Route>
 
                 {/* 咨询与服务 */}
@@ -144,8 +152,6 @@ function App() {
                 <Route path="user">
                   <Route path="profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
                   <Route path="learning" element={<ProtectedRoute><LearningRecords /></ProtectedRoute>} />
-                  <Route path="favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
-                  <Route path="interactions" element={<ProtectedRoute><Interactions /></ProtectedRoute>} />
                   <Route path="enterprise" element={<ProtectedRoute><Enterprise /></ProtectedRoute>} />
                   <Route path="orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
                 </Route>

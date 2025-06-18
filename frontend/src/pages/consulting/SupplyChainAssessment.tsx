@@ -7,11 +7,14 @@ import {
   Button,
   Icon,
   VStack,
+  HStack,
   List,
   ListItem,
   ListIcon,
   Grid,
   GridItem,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react';
 import {
   FiCheckCircle,
@@ -28,6 +31,12 @@ import TechHeading from '../../components/common/TechHeading';
 import GlassCard from '../../components/common/GlassCard';
 
 const SupplyChainAssessment = () => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   const assessmentAreas = [
     {
       title: '战略规划评估',
@@ -126,6 +135,14 @@ const SupplyChainAssessment = () => {
     <Box py={20}>
       <Container maxW="container.xl">
         <VStack spacing={16}>
+          {/* 测试提示 */}
+          {isLoaded && (
+            <Alert status="success" borderRadius="md">
+              <AlertIcon />
+              供应链评估页面已成功加载！
+            </Alert>
+          )}
+
           {/* 评估介绍 */}
           <Box textAlign="center">
             <TechHeading size="2xl" mb={6}>

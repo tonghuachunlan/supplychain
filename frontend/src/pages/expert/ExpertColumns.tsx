@@ -20,11 +20,11 @@ import { Link } from 'react-router-dom';
 import { FiBook, FiVideo, FiMessageSquare, FiArrowRight, FiAward, FiUsers, FiTarget, FiCheckCircle } from 'react-icons/fi';
 
 const mainExpert = {
-  id: 'wushugui',
+  id: 1,
   name: '吴树贵',
   title: '供应链管理专家',
-  avatar: 'https://via.placeholder.com/150x150/2B6CB0/FFFFFF?text=吴树贵',  // 临时使用占位图
-  description: '20多年来一直从事企业数字化转型服务，结合自己对于企业管理和供应链的研究，深感当下正是一个"数字化"和"供应链"相互加持的时代。著有《供应链思维：链性、战略和数字化转型》等重要著作，提出了供应链认知"四段式"理念和供应链七大链性理论。',
+  avatar: '/images/experts/expert-wu.svg',
+  description: '拥有20年供应链管理经验，专注于数字化转型和供应链优化',
   achievements: [
     '20年+供应链管理和数字化转型经验',
     '服务数百家企业供应链转型实践',
@@ -38,9 +38,9 @@ const mainExpert = {
     { label: '课程评分', value: '4.9' }
   ],
   latestBook: {
-    title: '供应链思维：链性、战略和数字化转型',
-    cover: 'https://via.placeholder.com/300x400/2B6CB0/FFFFFF?text=供应链思维',  // 临时使用占位图
-    description: '本书从数字化转型和数字技术应用等角度，重新定义了供应链，介绍了其发展趋势，全面分析了如何运用供应链思维统筹数字化转型。书中详细探讨了供应链七大链性，以及交易在其中的关键作用，揭示了供应链在企业战略制定与执行中的重要地位。',
+    title: '供应链思维',
+    cover: '/images/books/supply-chain-thinking.svg',
+    description: '深入解析供应链管理的核心思维模式',
     features: [
       '供应链七大链性详解',
       '数字化转型实践指南',
@@ -92,21 +92,25 @@ const mainExpert = {
   ]
 };
 
-const otherExperts = [
+const experts = [
   {
-    id: 'expert2',
+    id: 2,
     name: '张教授',
-    title: '供应链战略专家',
-    avatar: 'https://via.placeholder.com/150x150/4A5568/FFFFFF?text=张教授',
-    description: '专注供应链战略规划与优化',
+    title: '供应链理论专家',
+    avatar: '/images/experts/expert-zhang.svg',
+    specialty: '供应链理论',
+    articles: 15,
+    followers: 1200
   },
   {
-    id: 'expert3',
+    id: 3,
     name: '李博士',
     title: '数字化转型专家',
-    avatar: 'https://via.placeholder.com/150x150/4A5568/FFFFFF?text=李博士',
-    description: '深耕企业数字化转型领域',
-  },
+    avatar: '/images/experts/expert-li.svg',
+    specialty: '数字化转型',
+    articles: 12,
+    followers: 980
+  }
 ];
 
 export default function ExpertColumns() {
@@ -195,7 +199,7 @@ export default function ExpertColumns() {
                   </Button>
                   <Button
                     as={Link}
-                    to="/qa/expert/wushugui"
+                    to={`/qa/expert/${mainExpert.id}`}
                     variant="outline"
                     colorScheme="blue"
                     rightIcon={<FiMessageSquare />}
@@ -323,7 +327,7 @@ export default function ExpertColumns() {
           <VStack w="full" spacing={6}>
             <Heading size="lg">更多专家</Heading>
             <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} w="full">
-              {otherExperts.map((expert) => (
+              {experts.map((expert) => (
                 <Box
                   key={expert.id}
                   bg={bg}
@@ -342,7 +346,7 @@ export default function ExpertColumns() {
                       </Text>
                     </VStack>
                     <Text color="gray.600" textAlign="center" noOfLines={2}>
-                      {expert.description}
+                      {expert.specialty}
                     </Text>
                     <Button
                       as={Link}

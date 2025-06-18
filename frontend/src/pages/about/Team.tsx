@@ -92,7 +92,7 @@ export default function Team() {
                     borderRadius="full"
                     boxSize="200px"
                     objectFit="cover"
-                    fallbackSrc="https://via.placeholder.com/200"
+                    fallbackSrc="/images/placeholder-avatar.svg"
                   />
                   <VStack spacing={2}>
                     <Heading size="md" color="gray.800">

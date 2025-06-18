@@ -151,12 +151,12 @@ export default function Login() {
           </Button>
           
           <Stack direction="row" justify="space-between" fontSize="sm">
-            <Link as={RouterLink} to="/forgot-password" color="brand.500">
+            <Link as={RouterLink} to="/forgot-password" colorScheme="brand">
               忘记密码？
             </Link>
             <Text>
               还没有账号？{' '}
-              <Link as={RouterLink} to="/register" color="brand.500">
+              <Link as={RouterLink} to="/register" colorScheme="brand">
                 立即注册
               </Link>
             </Text>

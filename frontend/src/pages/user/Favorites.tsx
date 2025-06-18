@@ -42,7 +42,7 @@ const Favorites: React.FC = () => {
         duration: '15小时',
         level: '高级',
         price: '￥299',
-        image: 'https://example.com/course1.jpg',
+        image: '/images/courses/strategy-execution.svg',
         tags: ['战略规划', '实践案例'],
       },
       {
@@ -53,7 +53,7 @@ const Favorites: React.FC = () => {
         duration: '12小时',
         level: '中级',
         price: '￥259',
-        image: 'https://example.com/course2.jpg',
+        image: '/images/courses/digital-transformation.svg',
         tags: ['数字化', '转型'],
       },
     ],
@@ -163,7 +163,7 @@ const Favorites: React.FC = () => {
                       height="200px"
                       width="100%"
                       objectFit="cover"
-                      fallbackSrc="https://via.placeholder.com/400x200"
+                      fallbackSrc="/images/placeholder-course.svg"
                     />
                     <Box p={6}>
                       <VStack align="stretch" spacing={4}>
@@ -238,7 +238,7 @@ const Favorites: React.FC = () => {
                       height="200px"
                       width="100%"
                       objectFit="cover"
-                      fallbackSrc="https://via.placeholder.com/400x200"
+                      fallbackSrc="/images/placeholder-article.svg"
                     />
                     <Box p={6}>
                       <VStack align="stretch" spacing={4}>

@@ -28,7 +28,7 @@ const BasicCourses: React.FC = () => {
       duration: '10小时',
       students: 1200,
       rating: 4.8,
-      image: 'https://example.com/course1.jpg',
+      image: '/images/courses/basic-supply-chain.svg',
       tags: ['入门', '理论基础'],
     },
     {
@@ -38,7 +38,7 @@ const BasicCourses: React.FC = () => {
       duration: '8小时',
       students: 980,
       rating: 4.7,
-      image: 'https://example.com/course2.jpg',
+      image: '/images/courses/inventory-management.svg',
       tags: ['入门', '库存管理'],
     },
     {
@@ -48,7 +48,7 @@ const BasicCourses: React.FC = () => {
       duration: '12小时',
       students: 1500,
       rating: 4.9,
-      image: 'https://example.com/course3.jpg',
+      image: '/images/courses/procurement-basic.svg',
       tags: ['入门', '采购管理'],
     },
   ];
@@ -79,7 +79,7 @@ const BasicCourses: React.FC = () => {
             <Image
               src={course.image}
               alt={course.title}
-              fallbackSrc="https://via.placeholder.com/400x225"
+              fallbackSrc="/images/placeholder-course.svg"
               objectFit="cover"
               h="200px"
               w="100%"

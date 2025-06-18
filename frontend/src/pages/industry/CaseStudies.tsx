@@ -64,7 +64,7 @@ const CaseStudies: React.FC = () => {
       category: '数字化转型',
       industry: '零售',
       date: '2024-03-01',
-      image: 'https://example.com/case1.jpg',
+      image: '/images/cases/retail-transformation.svg',
       tags: ['全渠道', '数字化', '库存优化'],
     },
     {
@@ -90,7 +90,7 @@ const CaseStudies: React.FC = () => {
       category: '可持续发展',
       industry: '制造业',
       date: '2024-02-15',
-      image: 'https://example.com/case2.jpg',
+      image: '/images/cases/green-supply-chain.svg',
       tags: ['绿色供应链', '可持续发展', '环境保护'],
     },
     {
@@ -116,7 +116,7 @@ const CaseStudies: React.FC = () => {
       category: '智能规划',
       industry: '高科技',
       date: '2024-02-01',
-      image: 'https://example.com/case3.jpg',
+      image: '/images/cases/ai-planning.svg',
       tags: ['人工智能', '智能规划', '决策优化'],
     },
   ];
@@ -158,9 +158,9 @@ const CaseStudies: React.FC = () => {
             <Image
               src={case_.image}
               alt={case_.title}
-              fallbackSrc="https://via.placeholder.com/800x400"
+              fallbackSrc="/images/placeholder-case.svg"
               objectFit="cover"
-              h="300px"
+              h="200px"
               w="100%"
             />
             <Box p={6}>

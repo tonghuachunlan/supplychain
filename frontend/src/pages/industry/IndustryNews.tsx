@@ -39,7 +39,7 @@ const IndustryNews: React.FC = () => {
       author: '张三',
       source: '供应链周刊',
       views: 1500,
-      image: 'https://example.com/news1.jpg',
+      image: '/images/news/digital-transformation.svg',
       tags: ['数字化转型', '全球供应链', '技术创新'],
     },
     {
@@ -52,7 +52,7 @@ const IndustryNews: React.FC = () => {
       author: '李四',
       source: '产业观察',
       views: 1200,
-      image: 'https://example.com/news2.jpg',
+      image: '/images/news/ev-supply-chain.svg',
       tags: ['新能源汽车', '产业链', '原材料'],
     },
     {
@@ -65,7 +65,7 @@ const IndustryNews: React.FC = () => {
       author: '王五',
       source: '金融科技报',
       views: 1800,
-      image: 'https://example.com/news3.jpg',
+      image: '/images/news/supply-chain-finance.svg',
       tags: ['供应链金融', '区块链', '创新'],
     },
   ];
@@ -109,7 +109,7 @@ const IndustryNews: React.FC = () => {
             <Image
               src={item.image}
               alt={item.title}
-              fallbackSrc="https://via.placeholder.com/600x300"
+              fallbackSrc="/images/placeholder-news.svg"
               objectFit="cover"
               h="200px"
               w="100%"

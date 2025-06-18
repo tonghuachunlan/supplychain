@@ -13,14 +13,16 @@ interface User {
   email: string;
   isAdmin?: boolean;
   isEnterprise?: boolean;
+  membership?: any; // 或者更具体的类型
+  learningProgress?: any[]; // 或者更具体的类型
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (username: string, email: string, password: string) => Promise<void>;
+  login: (data: { email: string; password: string }) => Promise<void>;
+  register: (data: { username: string; email: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -46,24 +48,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const login = async (email: string, password: string) => {
+  const login = async (data: { email: string; password: string }) => {
     try {
       setError(null);
-      const response = await authService.login({ email, password });
-      setUser(response.user);
-    } catch (error) {
-      setError('登录失败，请检查邮箱和密码');
+      const response = await authService.login(data);
+      // 重新获取完整的用户信息
+      await checkAuth();
+    } catch (error: any) {
+      setError(error.message || '登录失败，请检查邮箱和密码');
       throw error;
     }
   };
 
-  const register = async (username: string, email: string, password: string) => {
+  const register = async (data: { username: string; email: string; password: string }) => {
     try {
       setError(null);
-      const response = await authService.register({ username, email, password });
-      setUser(response.user);
-    } catch (error) {
-      setError('注册失败，请稍后重试');
+      const response = await authService.register(data);
+      // 重新获取完整的用户信息
+      await checkAuth();
+    } catch (error: any) {
+      setError(error.message || '注册失败，请稍后重试');
       throw error;
     }
   };

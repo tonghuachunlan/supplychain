@@ -65,7 +65,7 @@ const menuItems = [
     label: '新闻动态',
     path: '/news',
     children: [
-      { label: '行业新闻', path: '/news/news' },
+      { label: '行业新闻', path: '/news' },
       { label: '政策解读', path: '/news/policy' },
       { label: '技术趋势', path: '/news/technology' },
       { label: '案例分析', path: '/news/cases' },
@@ -105,7 +105,7 @@ export default function MainNav() {
         <Flex h={16} alignItems="center">
           <RouterLink to="/">
             <Text fontSize="xl" fontWeight="bold" color={textColor}>
-              供应链思维学院
+              供应链思维
             </Text>
           </RouterLink>
 

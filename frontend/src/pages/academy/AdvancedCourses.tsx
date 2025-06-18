@@ -28,7 +28,7 @@ const AdvancedCourses: React.FC = () => {
       duration: '15小时',
       students: 800,
       rating: 4.9,
-      image: 'https://example.com/advanced1.jpg',
+      image: '/images/courses/strategy-planning.svg',
       tags: ['进阶', '战略规划'],
       prerequisites: ['供应链管理基础'],
     },
@@ -39,7 +39,7 @@ const AdvancedCourses: React.FC = () => {
       duration: '20小时',
       students: 600,
       rating: 4.8,
-      image: 'https://example.com/advanced2.jpg',
+      image: '/images/courses/network-optimization.svg',
       tags: ['进阶', '网络优化'],
       prerequisites: ['供应链管理基础', '运营管理'],
     },
@@ -50,7 +50,7 @@ const AdvancedCourses: React.FC = () => {
       duration: '18小时',
       students: 750,
       rating: 4.9,
-      image: 'https://example.com/advanced3.jpg',
+      image: '/images/courses/risk-management.svg',
       tags: ['进阶', '风险管理'],
       prerequisites: ['供应链管理基础', '风险管理基础'],
     },
@@ -82,7 +82,7 @@ const AdvancedCourses: React.FC = () => {
             <Image
               src={course.image}
               alt={course.title}
-              fallbackSrc="https://via.placeholder.com/400x225"
+              fallbackSrc="/images/placeholder-course.svg"
               objectFit="cover"
               h="200px"
               w="100%"

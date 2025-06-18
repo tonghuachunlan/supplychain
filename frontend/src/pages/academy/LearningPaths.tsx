@@ -14,6 +14,12 @@ import {
   List,
   ListItem,
   ListIcon,
+  SimpleGrid,
+  Badge,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
 } from '@chakra-ui/react';
 import {
   FiBookmark,
@@ -22,6 +28,9 @@ import {
   FiArrowRight,
   FiAward,
   FiTrendingUp,
+  FiUsers,
+  FiBook,
+  FiTarget,
 } from 'react-icons/fi';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -36,15 +45,42 @@ const LearningPaths: React.FC = () => {
       description: '系统学习供应链管理知识，获取专业认证',
       duration: '6个月',
       progress: 65,
+      level: '初级到高级',
+      enrolledCount: 1500,
       courses: [
-        '供应链管理基础',
-        '库存管理与优化',
-        '采购管理实务',
-        '物流运输管理',
-        '供应链风险管理',
-        '供应链战略规划',
+        {
+          title: '供应链管理基础',
+          duration: '30小时',
+          status: 'completed',
+        },
+        {
+          title: '库存管理与优化',
+          duration: '25小时',
+          status: 'completed',
+        },
+        {
+          title: '采购管理实务',
+          duration: '28小时',
+          status: 'current',
+        },
+        {
+          title: '物流运输管理',
+          duration: '32小时',
+          status: 'upcoming',
+        },
+        {
+          title: '供应链风险管理',
+          duration: '24小时',
+          status: 'upcoming',
+        },
+        {
+          title: '供应链战略规划',
+          duration: '35小时',
+          status: 'upcoming',
+        },
       ],
       certification: '供应链管理师（SCM）认证',
+      skills: ['供应链规划', '库存管理', '采购管理', '物流管理', '风险管理'],
     },
     {
       id: 2,
@@ -52,15 +88,85 @@ const LearningPaths: React.FC = () => {
       description: '掌握供应链数字化转型所需的知识和技能',
       duration: '8个月',
       progress: 30,
+      level: '中级到高级',
+      enrolledCount: 980,
       courses: [
-        '供应链数字化基础',
-        '数据分析与可视化',
-        '供应链系统集成',
-        '区块链技术应用',
-        'AI在供应链中的应用',
-        '数字化转型实践',
+        {
+          title: '供应链数字化基础',
+          duration: '28小时',
+          status: 'completed',
+        },
+        {
+          title: '数据分析与可视化',
+          duration: '35小时',
+          status: 'current',
+        },
+        {
+          title: '供应链系统集成',
+          duration: '40小时',
+          status: 'upcoming',
+        },
+        {
+          title: '区块链技术应用',
+          duration: '32小时',
+          status: 'upcoming',
+        },
+        {
+          title: 'AI在供应链中的应用',
+          duration: '38小时',
+          status: 'upcoming',
+        },
+        {
+          title: '数字化转型实践',
+          duration: '45小时',
+          status: 'upcoming',
+        },
       ],
       certification: '数字供应链专家认证',
+      skills: ['数字化转型', '数据分析', '系统集成', '区块链', 'AI应用'],
+    },
+    {
+      id: 3,
+      title: '供应链运营优化专家路径',
+      description: '深入学习供应链运营优化的方法和工具',
+      duration: '7个月',
+      progress: 15,
+      level: '中级',
+      enrolledCount: 750,
+      courses: [
+        {
+          title: '运营管理基础',
+          duration: '25小时',
+          status: 'completed',
+        },
+        {
+          title: '流程优化方法论',
+          duration: '30小时',
+          status: 'current',
+        },
+        {
+          title: '精益供应链管理',
+          duration: '35小时',
+          status: 'upcoming',
+        },
+        {
+          title: '供应链成本控制',
+          duration: '28小时',
+          status: 'upcoming',
+        },
+        {
+          title: '绩效管理与改进',
+          duration: '32小时',
+          status: 'upcoming',
+        },
+        {
+          title: '运营效率提升实践',
+          duration: '38小时',
+          status: 'upcoming',
+        },
+      ],
+      certification: '供应链运营优化专家认证',
+      skills: ['运营管理', '流程优化', '精益管理', '成本控制', '绩效管理'],
     },
   ];
 
@@ -73,6 +179,69 @@ const LearningPaths: React.FC = () => {
           选择适合您的职业发展路径，系统提升供应链管理能力
         </Text>
       </VStack>
+
+      {/* 统计概览 */}
+      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8} mb={12}>
+        <Stat
+          px={6}
+          py={4}
+          bg={bgColor}
+          borderRadius="lg"
+          borderWidth="1px"
+          borderColor={borderColor}
+        >
+          <StatLabel fontSize="lg">总学习路径</StatLabel>
+          <StatNumber fontSize="3xl" fontWeight="bold" color="blue.500">
+            3
+          </StatNumber>
+          <StatHelpText>
+            <HStack>
+              <Icon as={FiBook} />
+              <Text>专业认证路径</Text>
+            </HStack>
+          </StatHelpText>
+        </Stat>
+
+        <Stat
+          px={6}
+          py={4}
+          bg={bgColor}
+          borderRadius="lg"
+          borderWidth="1px"
+          borderColor={borderColor}
+        >
+          <StatLabel fontSize="lg">总课程数</StatLabel>
+          <StatNumber fontSize="3xl" fontWeight="bold" color="green.500">
+            18
+          </StatNumber>
+          <StatHelpText>
+            <HStack>
+              <Icon as={FiTarget} />
+              <Text>系统化课程</Text>
+            </HStack>
+          </StatHelpText>
+        </Stat>
+
+        <Stat
+          px={6}
+          py={4}
+          bg={bgColor}
+          borderRadius="lg"
+          borderWidth="1px"
+          borderColor={borderColor}
+        >
+          <StatLabel fontSize="lg">学习人数</StatLabel>
+          <StatNumber fontSize="3xl" fontWeight="bold" color="purple.500">
+            3230
+          </StatNumber>
+          <StatHelpText>
+            <HStack>
+              <Icon as={FiUsers} />
+              <Text>正在学习</Text>
+            </HStack>
+          </StatHelpText>
+        </Stat>
+      </SimpleGrid>
 
       {/* 路径列表 */}
       <VStack spacing={8} align="stretch">
@@ -88,22 +257,29 @@ const LearningPaths: React.FC = () => {
             <VStack align="stretch" spacing={6}>
               <HStack justify="space-between">
                 <VStack align="start" spacing={2}>
-                  <Heading size="lg">{path.title}</Heading>
+                  <HStack>
+                    <Heading size="lg">{path.title}</Heading>
+                    <Badge colorScheme="blue">{path.level}</Badge>
+                  </HStack>
                   <Text color="gray.600">{path.description}</Text>
                 </VStack>
                 <Icon as={FiTrendingUp} boxSize={8} color="blue.500" />
               </HStack>
 
-              <HStack spacing={8}>
+              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
                 <HStack>
                   <Icon as={FiClock} color="gray.500" />
-                  <Text color="gray.600">预计完成时间：{path.duration}</Text>
+                  <Text color="gray.600">学习时长：{path.duration}</Text>
+                </HStack>
+                <HStack>
+                  <Icon as={FiUsers} color="gray.500" />
+                  <Text color="gray.600">{path.enrolledCount}人在学</Text>
                 </HStack>
                 <HStack>
                   <Icon as={FiAward} color="gray.500" />
                   <Text color="gray.600">获得{path.certification}</Text>
                 </HStack>
-              </HStack>
+              </SimpleGrid>
 
               <Box>
                 <HStack justify="space-between" mb={2}>
@@ -114,6 +290,7 @@ const LearningPaths: React.FC = () => {
                   value={path.progress}
                   colorScheme="blue"
                   borderRadius="full"
+                  size="sm"
                 />
               </Box>
 
@@ -121,21 +298,70 @@ const LearningPaths: React.FC = () => {
 
               <VStack align="start" spacing={4}>
                 <Text fontWeight="bold">课程安排：</Text>
-                <List spacing={3}>
+                <List spacing={3} width="100%">
                   {path.courses.map((course, index) => (
-                    <ListItem key={index}>
+                    <ListItem
+                      key={index}
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      p={2}
+                      bg={course.status === 'current' ? 'blue.50' : 'transparent'}
+                      borderRadius="md"
+                    >
                       <HStack>
                         <ListIcon
-                          as={index < path.progress / 20 ? FiCheck : FiBookmark}
+                          as={course.status === 'completed' ? FiCheck : FiBookmark}
                           color={
-                            index < path.progress / 20 ? 'green.500' : 'gray.500'
+                            course.status === 'completed'
+                              ? 'green.500'
+                              : course.status === 'current'
+                              ? 'blue.500'
+                              : 'gray.500'
                           }
                         />
-                        <Text color="gray.700">{course}</Text>
+                        <Text color="gray.700">{course.title}</Text>
+                      </HStack>
+                      <HStack spacing={4}>
+                        <Text color="gray.500" fontSize="sm">
+                          {course.duration}
+                        </Text>
+                        <Badge
+                          colorScheme={
+                            course.status === 'completed'
+                              ? 'green'
+                              : course.status === 'current'
+                              ? 'blue'
+                              : 'gray'
+                          }
+                        >
+                          {course.status === 'completed'
+                            ? '已完成'
+                            : course.status === 'current'
+                            ? '学习中'
+                            : '待学习'}
+                        </Badge>
                       </HStack>
                     </ListItem>
                   ))}
                 </List>
+              </VStack>
+
+              <VStack align="start" spacing={4}>
+                <Text fontWeight="bold">核心技能：</Text>
+                <HStack wrap="wrap" spacing={2}>
+                  {path.skills.map((skill, index) => (
+                    <Badge
+                      key={index}
+                      colorScheme="purple"
+                      variant="subtle"
+                      px={3}
+                      py={1}
+                    >
+                      {skill}
+                    </Badge>
+                  ))}
+                </HStack>
               </VStack>
 
               <Button

@@ -15,9 +15,12 @@ import {
   useColorModeValue,
   Icon,
   Badge,
+  Progress,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { FiBook, FiVideo, FiMessageSquare, FiArrowRight, FiAward, FiUsers, FiTarget, FiCheckCircle } from 'react-icons/fi';
+import { FiBook, FiVideo, FiMessageSquare, FiArrowRight, FiAward, FiUsers, FiTarget, FiCheckCircle, FiClock, FiTrendingUp } from 'react-icons/fi';
+import LearningProgress from '../../components/LearningProgress';
+import EnrollButton from '../../components/EnrollButton';
 
 const mainExpert = {
   id: 'wushugui',
@@ -39,7 +42,7 @@ const mainExpert = {
   ],
   latestBook: {
     title: '供应链思维：链性、战略和数字化转型',
-    cover: 'https://via.placeholder.com/300x400/2B6CB0/FFFFFF?text=供应链思维',
+    cover: '/images/books/supply-chain-thinking.svg',
     description: '本书从数字化转型和数字技术应用等角度，重新定义了供应链，介绍了其发展趋势，全面分析了如何运用供应链思维统筹数字化转型。书中详细探讨了供应链七大链性，以及交易在其中的关键作用，揭示了供应链在企业战略制定与执行中的重要地位。',
     features: [
       '供应链七大链性详解',
@@ -89,7 +92,53 @@ const mainExpert = {
         '方案点评'
       ]
     }
-  ]
+  ],
+  learningPath: {
+    title: '供应链思维学习路径',
+    description: '系统化的学习路径，帮助您从基础到实战掌握供应链思维',
+    currentProgress: {
+      section: {
+        title: '供应链思维基础课程',
+        progress: 35,
+        duration: '预计还需2小时',
+      },
+      overallProgress: 25,
+      timeSpent: '8小时',
+      lastActivity: '2024-03-15',
+    },
+    steps: [
+      {
+        id: 'step1',
+        title: '入门准备',
+        courses: ['sct-basic'],
+        description: '通过基础课程掌握供应链思维的核心概念和基本理论',
+        status: 'in_progress',
+        progress: 35
+      },
+      {
+        id: 'step2',
+        title: '实战进阶',
+        courses: ['sct-advanced'],
+        description: '深入学习数字化转型实战案例，提升实践能力',
+        status: 'upcoming',
+        progress: 0
+      },
+      {
+        id: 'step3',
+        title: '专题研究',
+        description: '深入研究七大链性理论，建立系统化认知',
+        status: 'upcoming',
+        progress: 0
+      },
+      {
+        id: 'step4',
+        title: '实践应用',
+        description: '参与实践案例讨论，应用所学解决实际问题',
+        status: 'upcoming',
+        progress: 0
+      }
+    ]
+  }
 };
 
 const otherExperts = [
@@ -196,7 +245,7 @@ export default function ExpertColumns() {
                   </Button>
                   <Button
                     as={Link}
-                    to="/qa/expert/wushugui"
+                    to={`/expert/${mainExpert.id}/qa`}
                     variant="outline"
                     colorScheme="blue"
                     rightIcon={<FiMessageSquare />}
@@ -291,17 +340,13 @@ export default function ExpertColumns() {
                             </Text>
                           </VStack>
                           <HStack spacing={2}>
+                            <EnrollButton
+                              courseId={course.id}
+                              price={course.price}
+                            />
                             <Button
                               as={Link}
-                              to={`/course/${course.id}`}
-                              colorScheme="blue"
-                              rightIcon={<FiVideo />}
-                            >
-                              立即学习
-                            </Button>
-                            <Button
-                              as={Link}
-                              to={`/course/${course.id}/qa`}
+                              to={`/academy/courses/${course.id}/qa`}
                               variant="outline"
                               colorScheme="blue"
                               rightIcon={<FiMessageSquare />}
@@ -316,6 +361,109 @@ export default function ExpertColumns() {
                 </VStack>
               </VStack>
             </SimpleGrid>
+          </Box>
+
+          {/* 学习路径部分 */}
+          <Box w="full" bg={bg} p={8} borderRadius="xl" shadow="lg">
+            <VStack align="flex-start" spacing={8}>
+              <HStack justify="space-between" w="full">
+                <VStack align="flex-start" spacing={2}>
+                  <Heading size="lg" color="blue.600">
+                    {mainExpert.learningPath.title}
+                  </Heading>
+                  <Text color="gray.600" fontSize="lg">
+                    {mainExpert.learningPath.description}
+                  </Text>
+                </VStack>
+                <Button
+                  as={Link}
+                  to="/academy/paths"
+                  variant="outline"
+                  colorScheme="blue"
+                  rightIcon={<FiArrowRight />}
+                >
+                  查看所有学习路径
+                </Button>
+              </HStack>
+
+              {/* 学习进度 */}
+              <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8} w="full">
+                <Box>
+                  <LearningProgress
+                    currentSection={mainExpert.learningPath.currentProgress.section}
+                    overallProgress={mainExpert.learningPath.currentProgress.overallProgress}
+                    timeSpent={mainExpert.learningPath.currentProgress.timeSpent}
+                    lastActivity={mainExpert.learningPath.currentProgress.lastActivity}
+                  />
+                </Box>
+                <Box>
+                  <VStack align="stretch" spacing={4}>
+                    {mainExpert.learningPath.steps.map((step, index) => (
+                      <Box
+                        key={step.id}
+                        p={4}
+                        borderWidth="1px"
+                        borderRadius="lg"
+                        borderColor={step.status === 'in_progress' ? 'blue.200' : 'gray.200'}
+                        bg={step.status === 'in_progress' ? 'blue.50' : 'white'}
+                      >
+                        <HStack justify="space-between">
+                          <VStack align="start" spacing={1}>
+                            <HStack>
+                              <Box
+                                w="24px"
+                                h="24px"
+                                borderRadius="full"
+                                bg={step.status === 'in_progress' ? 'blue.500' : 'gray.300'}
+                                color="white"
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                                fontSize="sm"
+                              >
+                                {index + 1}
+                              </Box>
+                              <Heading size="sm">{step.title}</Heading>
+                            </HStack>
+                            <Text fontSize="sm" color="gray.600">
+                              {step.description}
+                            </Text>
+                          </VStack>
+                          {step.status === 'in_progress' && (
+                            <Badge colorScheme="blue">进行中</Badge>
+                          )}
+                        </HStack>
+                        {step.status === 'in_progress' && (
+                          <Box mt={2}>
+                            <Progress
+                              value={step.progress}
+                              size="sm"
+                              colorScheme="blue"
+                              borderRadius="full"
+                            />
+                            <HStack justify="space-between" mt={1}>
+                              <Text fontSize="sm" color="gray.500">
+                                完成度 {step.progress}%
+                              </Text>
+                              <Button
+                                as={Link}
+                                to={`/course/${step.courses?.[0]}`}
+                                size="sm"
+                                colorScheme="blue"
+                                variant="link"
+                                rightIcon={<FiArrowRight />}
+                              >
+                                继续学习
+                              </Button>
+                            </HStack>
+                          </Box>
+                        )}
+                      </Box>
+                    ))}
+                  </VStack>
+                </Box>
+              </SimpleGrid>
+            </VStack>
           </Box>
 
           <Divider />

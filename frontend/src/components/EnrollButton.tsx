@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Modal,
@@ -10,14 +10,13 @@ import {
   VStack,
   HStack,
   Text,
+  Box,
   Radio,
   RadioGroup,
   useDisclosure,
   useToast,
-  Box,
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
-import { courseService } from '../api/services/course.service';
 
 interface EnrollButtonProps {
   courseId: string;
@@ -34,7 +33,7 @@ export default function EnrollButton({ courseId, price, isEnrolled = false }: En
   const handleEnroll = async () => {
     if (isEnrolled) {
       // 已报名，直接跳转到学习页面
-      window.location.href = `/courses/${courseId}/learn`;
+      window.location.href = `/expert/course/${courseId}/learn`;
       return;
     }
     onOpen();
@@ -47,9 +46,6 @@ export default function EnrollButton({ courseId, price, isEnrolled = false }: En
       // 模拟支付过程
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // 模拟报名课程
-      await courseService.enroll(courseId);
-      
       onClose();
       
       toast({
@@ -60,7 +56,7 @@ export default function EnrollButton({ courseId, price, isEnrolled = false }: En
       });
       
       // 跳转到学习页面
-      window.location.href = `/courses/${courseId}/learn`;
+      window.location.href = `/expert/course/${courseId}/learn`;
     } catch (error: any) {
       toast({
         title: '支付失败',
@@ -76,12 +72,10 @@ export default function EnrollButton({ courseId, price, isEnrolled = false }: En
   return (
     <>
       <Button
-        size="lg"
         colorScheme="blue"
         leftIcon={<FiShoppingCart />}
         onClick={handleEnroll}
         isLoading={isProcessing}
-        width="100%"
       >
         {isEnrolled ? '继续学习' : '立即报名'}
       </Button>

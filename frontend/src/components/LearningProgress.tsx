@@ -1,14 +1,14 @@
+import React from 'react';
 import {
   Box,
   VStack,
   HStack,
-  Progress,
   Text,
+  Progress,
   Icon,
-  Tooltip,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { FiClock, FiCheckCircle, FiPlayCircle } from 'react-icons/fi';
+import { FiClock, FiCalendar } from 'react-icons/fi';
 
 interface LearningProgressProps {
   currentSection: {
@@ -16,15 +16,8 @@ interface LearningProgressProps {
     progress: number;
     duration: string;
   };
-  overallProgress: {
-    completed: number;
-    total: number;
-    percentage: number;
-  };
-  timeSpent: {
-    hours: number;
-    minutes: number;
-  };
+  overallProgress: number;
+  timeSpent: string;
   lastActivity: string;
 }
 
@@ -71,56 +64,43 @@ export default function LearningProgress({
           <Text fontWeight="bold" mb={2}>
             整体进度
           </Text>
-          <VStack align="stretch" spacing={3}>
-            <HStack spacing={4}>
-              <Tooltip label="已完成章节">
-                <HStack>
-                  <Icon as={FiCheckCircle} color="green.500" />
-                  <Text>
-                    {overallProgress.completed}/{overallProgress.total} 章节
-                  </Text>
-                </HStack>
-              </Tooltip>
-              <Tooltip label="总体完成度">
-                <Text color="blue.500" fontWeight="bold">
-                  {overallProgress.percentage}%
-                </Text>
-              </Tooltip>
-            </HStack>
-            <Progress
-              value={overallProgress.percentage}
-              size="lg"
-              colorScheme="blue"
-              borderRadius="full"
-              hasStripe
-            />
-          </VStack>
+          <Progress
+            value={overallProgress}
+            size="sm"
+            colorScheme="blue"
+            borderRadius="full"
+          />
+          <Text fontSize="sm" color="gray.500" mt={1}>
+            总完成度 {overallProgress}%
+          </Text>
         </Box>
 
-        {/* 学习时长统计 */}
-        <Box>
-          <Text fontWeight="bold" mb={2}>
-            学习统计
-          </Text>
-          <VStack align="stretch" spacing={3}>
-            <HStack justify="space-between">
-              <HStack>
-                <Icon as={FiClock} color="blue.500" />
-                <Text>总学习时长</Text>
-              </HStack>
-              <Text fontWeight="bold">
-                {timeSpent.hours}小时 {timeSpent.minutes}分钟
+        {/* 学习统计 */}
+        <VStack spacing={3}>
+          <HStack w="full" justify="space-between">
+            <HStack>
+              <Icon as={FiClock} color="blue.500" />
+              <Text fontSize="sm" color="gray.600">
+                学习时长
               </Text>
             </HStack>
-            <HStack justify="space-between">
-              <HStack>
-                <Icon as={FiPlayCircle} color="blue.500" />
-                <Text>最近学习</Text>
-              </HStack>
-              <Text color="gray.500">{lastActivity}</Text>
+            <Text fontSize="sm" fontWeight="bold">
+              {timeSpent}
+            </Text>
+          </HStack>
+
+          <HStack w="full" justify="space-between">
+            <HStack>
+              <Icon as={FiCalendar} color="blue.500" />
+              <Text fontSize="sm" color="gray.600">
+                最近学习
+              </Text>
             </HStack>
-          </VStack>
-        </Box>
+            <Text fontSize="sm" fontWeight="bold">
+              {lastActivity}
+            </Text>
+          </HStack>
+        </VStack>
       </VStack>
     </Box>
   );

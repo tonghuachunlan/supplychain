@@ -19,7 +19,6 @@ const footerSections = [
       { label: '平台介绍', path: '/about' },
       { label: '团队介绍', path: '/team' },
       { label: '联系我们', path: '/contact' },
-      { label: '加入我们', path: '/careers' },
     ],
   },
   {
@@ -32,21 +31,12 @@ const footerSections = [
     ],
   },
   {
-    title: '合作伙伴',
+    title: '合作与服务',
     links: [
-      { label: '企业合作', path: '/partner/enterprise' },
-      { label: '院校合作', path: '/partner/academy' },
-      { label: '讲师招募', path: '/partner/lecturer' },
-      { label: '品牌合作', path: '/partner/brand' },
-    ],
-  },
-  {
-    title: '更多服务',
-    links: [
+      { label: '企业合作', path: '/cooperation/enterprise' },
       { label: '企业培训', path: '/service/training' },
-      { label: '咨询服务', path: '/service/consulting' },
-      { label: '认证服务', path: '/service/certification' },
-      { label: '定制服务', path: '/service/customization' },
+      { label: '院校合作', path: '/cooperation/college' },
+      { label: '讲师招募', path: '/cooperation/lecturer' },
     ],
   },
 ];

@@ -106,7 +106,7 @@ export function MyCourseList({ courses, onRemove }: MyCourseListProps) {
                 height="160px"
                 width="100%"
                 objectFit="cover"
-                fallbackSrc="https://placehold.co/400x160?text=课程封面"
+                fallbackSrc="/images/placeholder-course.svg"
               />
 
               <Box p={4}>

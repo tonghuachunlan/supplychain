@@ -3,8 +3,10 @@ import { extendTheme } from '@chakra-ui/react';
 const theme = extendTheme({
   colors: {
     brand: {
-      // 主色调
-      primary: '#165DFF',    // 深海蓝
+      500: '#165DFF',    // 主色调
+      600: '#0045E0',    // Hover 状态
+      700: '#0034B3',    // Active 状态
+      primary: '#165DFF', // 主色调别名
       gray: '#F0F2F5',      // 科技银灰
       dark: '#1D2129',      // 墨黑
       // 辅助色
@@ -44,12 +46,12 @@ const theme = extendTheme({
     Button: {
       variants: {
         primary: {
-          bg: 'brand.primary',
+          bg: 'brand.500',
           color: 'white',
           _hover: {
-            bg: '#2970FF',
+            bg: 'brand.600',
             _disabled: {
-              bg: 'brand.primary',
+              bg: 'brand.500',
             },
           },
         },
@@ -101,7 +103,7 @@ const theme = extendTheme({
         bg: 'brand.gray',
       },
       '::-webkit-scrollbar-thumb': {
-        bg: 'brand.primary',
+        bg: 'brand.500',
         borderRadius: '3px',
       },
     },

@@ -23,7 +23,7 @@ const solutions = [
     id: '1',
     title: '供应链数字化转型解决方案',
     summary: '帮助企业实现供应链的数字化转型，提升运营效率和决策能力。',
-    coverImage: 'https://source.unsplash.com/random/800x400?digital',
+    coverImage: '/images/solutions/digital-transformation.svg',
     benefits: [
       '提升供应链可视化水平',
       '优化库存管理效率',
@@ -42,7 +42,7 @@ const solutions = [
     id: '2',
     title: '供应链风险管理解决方案',
     summary: '构建全面的供应链风险管理体系，提升企业抗风险能力。',
-    coverImage: 'https://source.unsplash.com/random/800x400?risk',
+    coverImage: '/images/solutions/risk-management.svg',
     benefits: [
       '建立风险预警机制',
       '优化供应商管理',
@@ -61,7 +61,7 @@ const solutions = [
     id: '3',
     title: '智能供应链规划方案',
     summary: '运用人工智能技术，实现供应链的智能化规划和优化。',
-    coverImage: 'https://source.unsplash.com/random/800x400?planning',
+    coverImage: '/images/solutions/intelligent-planning.svg',
     benefits: [
       '提升需求预测准确性',
       '优化库存配置策略',
@@ -80,7 +80,7 @@ const solutions = [
     id: '4',
     title: '绿色供应链解决方案',
     summary: '助力企业建设环境友好型供应链，实现可持续发展。',
-    coverImage: 'https://source.unsplash.com/random/800x400?green',
+    coverImage: '/images/solutions/green-supply-chain.svg',
     benefits: [
       '降低碳排放水平',
       '优化资源利用效率',

@@ -45,7 +45,7 @@ const TechnologyTrends: React.FC = () => {
       date: '2024-03-10',
       views: 2500,
       likes: 180,
-      image: 'https://example.com/ai-trend.jpg',
+      image: '/images/trends/ai-trend.svg',
       tags: ['人工智能', '预测分析', '需求规划'],
     },
     {
@@ -61,7 +61,7 @@ const TechnologyTrends: React.FC = () => {
       date: '2024-03-08',
       views: 2000,
       likes: 150,
-      image: 'https://example.com/blockchain-trend.jpg',
+      image: '/images/trends/blockchain-trend.svg',
       tags: ['区块链', '追溯系统', '透明度'],
     },
     {
@@ -77,7 +77,7 @@ const TechnologyTrends: React.FC = () => {
       date: '2024-03-05',
       views: 3000,
       likes: 220,
-      image: 'https://example.com/iot-trend.jpg',
+      image: '/images/trends/iot-trend.svg',
       tags: ['物联网', '智能仓储', '自动化'],
     },
   ];
@@ -121,7 +121,7 @@ const TechnologyTrends: React.FC = () => {
             <Image
               src={trend.image}
               alt={trend.title}
-              fallbackSrc="https://via.placeholder.com/600x300"
+              fallbackSrc="/images/placeholder-trend.svg"
               objectFit="cover"
               h="200px"
               w="100%"
