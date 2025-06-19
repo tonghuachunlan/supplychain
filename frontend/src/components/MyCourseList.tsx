@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { FiMoreVertical, FiPlay, FiClock } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-import { Course } from '../api/services/course.service';
+import { Course } from '../services/course.service';
 import { getPlaceholderImage } from '../constants/images';
 
 interface MyCourseListProps {

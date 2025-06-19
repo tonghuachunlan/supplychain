@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FiChevronDown, FiChevronUp, FiDownload } from 'react-icons/fi';
-import { Order } from '../api/services/payment.service';
+import { Order } from '../services/payment.service';
 
 interface OrderHistoryProps {
   orders: Order[];

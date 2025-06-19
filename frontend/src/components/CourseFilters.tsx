@@ -14,7 +14,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { FiSearch, FiFilter, FiX } from 'react-icons/fi';
-import { CourseFilters as FilterOptions } from '../api/services/course.service';
+import { CourseFilters as FilterOptions } from '../services/course.service';
 
 interface CourseFiltersProps {
   onFilterChange: (filters: FilterOptions) => void;

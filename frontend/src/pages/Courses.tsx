@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { CourseCard } from '../components/CourseCard';
 import { CourseFilters } from '../components/CourseFilters';
-import { courseService, type Course, type CourseFilters as FilterOptions } from '../api/services';
+import { courseService, type Course, type CourseFilters as FilterOptions } from '../services';
 
 const ITEMS_PER_PAGE = 12;
 

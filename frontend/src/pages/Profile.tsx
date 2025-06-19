@@ -35,7 +35,7 @@ import { LearningStats } from '../components/LearningStats';
 import { MyCourseList } from '../components/MyCourseList';
 import { OrderHistory } from '../components/OrderHistory';
 import { useAuth } from '../contexts/AuthContext';
-import { courseService, paymentService } from '../api/services';
+import { courseService, paymentService } from '../services';
 import type { LearningStats as LearningStatsType } from '../types/user';
 
 export default function Profile() {

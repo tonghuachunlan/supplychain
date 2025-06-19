@@ -12,8 +12,8 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { FiThumbsUp, FiMessageSquare, FiTrash2, FiEdit2 } from 'react-icons/fi';
-import type { Comment } from '../api/services/comment.service';
-import { commentService } from '../api/services/comment.service';
+import type { Comment } from '../services/comment.service';
+import { commentService } from '../services/comment.service';
 import { useAuth } from '../contexts/AuthContext';
 
 interface CommentListProps {

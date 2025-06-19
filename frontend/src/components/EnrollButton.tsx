@@ -17,7 +17,7 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
-import { courseService } from '../api/services/course.service';
+import { courseService } from '../services/course.service';
 
 interface EnrollButtonProps {
   courseId: string;
