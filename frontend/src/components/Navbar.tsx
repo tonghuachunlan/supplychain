@@ -61,7 +61,7 @@ const Navbar = () => {
               bgGradient="linear(to-r, brand.primary, brand.orange)"
               bgClip="text"
             >
-              供应链思维学院
+              供应链思维
             </Text>
           </Link>
 
