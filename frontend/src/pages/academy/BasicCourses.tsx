@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { FiClock, FiUsers, FiStar } from 'react-icons/fi';
 import { Link as RouterLink } from 'react-router-dom';
+import { getPlaceholderImage, getDynamicPlaceholderImage } from '../../constants/images';
 
 const BasicCourses: React.FC = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -28,7 +29,7 @@ const BasicCourses: React.FC = () => {
       duration: '10小时',
       students: 1200,
       rating: 4.8,
-      image: 'https://example.com/course1.jpg',
+      image: getPlaceholderImage('course', 'medium'),
       tags: ['入门', '理论基础'],
     },
     {
@@ -38,7 +39,7 @@ const BasicCourses: React.FC = () => {
       duration: '8小时',
       students: 980,
       rating: 4.7,
-      image: 'https://example.com/course2.jpg',
+      image: getPlaceholderImage('course', 'medium'),
       tags: ['入门', '库存管理'],
     },
     {
@@ -48,8 +49,38 @@ const BasicCourses: React.FC = () => {
       duration: '12小时',
       students: 1500,
       rating: 4.9,
-      image: 'https://example.com/course3.jpg',
+      image: getPlaceholderImage('course', 'medium'),
       tags: ['入门', '采购管理'],
+    },
+    {
+      id: 4,
+      title: '物流配送基础',
+      description: '掌握物流配送的基本原理和操作方法',
+      duration: '9小时',
+      students: 850,
+      rating: 4.6,
+      image: getPlaceholderImage('course', 'medium'),
+      tags: ['入门', '物流管理'],
+    },
+    {
+      id: 5,
+      title: '供应商管理入门',
+      description: '学习供应商选择、评估和管理的基本方法',
+      duration: '11小时',
+      students: 1100,
+      rating: 4.8,
+      image: getPlaceholderImage('course', 'medium'),
+      tags: ['入门', '供应商管理'],
+    },
+    {
+      id: 6,
+      title: '需求预测基础',
+      description: '掌握需求预测的基本方法和工具',
+      duration: '7小时',
+      students: 720,
+      rating: 4.5,
+      image: getPlaceholderImage('course', 'medium'),
+      tags: ['入门', '需求预测'],
     },
   ];
 
@@ -77,12 +108,12 @@ const BasicCourses: React.FC = () => {
             transition="all 0.3s"
           >
             <Image
-              src={course.image}
+              src={getDynamicPlaceholderImage(course.title, 'course', 'medium')}
               alt={course.title}
-              fallbackSrc="https://via.placeholder.com/400x225"
               objectFit="cover"
               h="200px"
               w="100%"
+              fallbackSrc={getDynamicPlaceholderImage(course.title, 'course', 'medium')}
             />
             <Box p={6}>
               <VStack align="start" spacing={4}>

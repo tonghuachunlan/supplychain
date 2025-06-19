@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import PageTemplate from '../../components/PageTemplate';
+import { getDynamicPlaceholderImage } from '../../constants/images';
 
 // 模拟数据
 const articles = [
@@ -103,11 +104,13 @@ export default function DeepArticles() {
             <CardBody>
               <Stack spacing={4}>
                 <Image
-                  src={article.coverImage}
+                  src={getDynamicPlaceholderImage(article.title, 'news', 'medium')}
                   alt={article.title}
-                  borderRadius="lg"
-                  height="200px"
                   objectFit="cover"
+                  h="180px"
+                  w="100%"
+                  borderRadius="md"
+                  fallbackSrc={getDynamicPlaceholderImage(article.title, 'news', 'medium')}
                 />
                 
                 <Stack spacing={2}>

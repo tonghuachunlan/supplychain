@@ -23,6 +23,7 @@ import {
   FiShare2,
   FiBookmark,
 } from 'react-icons/fi';
+import { getDynamicPlaceholderImage } from '../../constants/images';
 
 const IndustryNews: React.FC = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -39,7 +40,6 @@ const IndustryNews: React.FC = () => {
       author: '张三',
       source: '供应链周刊',
       views: 1500,
-      image: 'https://example.com/news1.jpg',
       tags: ['数字化转型', '全球供应链', '技术创新'],
     },
     {
@@ -52,7 +52,6 @@ const IndustryNews: React.FC = () => {
       author: '李四',
       source: '产业观察',
       views: 1200,
-      image: 'https://example.com/news2.jpg',
       tags: ['新能源汽车', '产业链', '原材料'],
     },
     {
@@ -65,7 +64,6 @@ const IndustryNews: React.FC = () => {
       author: '王五',
       source: '金融科技报',
       views: 1800,
-      image: 'https://example.com/news3.jpg',
       tags: ['供应链金融', '区块链', '创新'],
     },
   ];
@@ -107,12 +105,13 @@ const IndustryNews: React.FC = () => {
             transition="all 0.3s"
           >
             <Image
-              src={item.image}
+              src={getDynamicPlaceholderImage(item.title, 'news', 'medium')}
               alt={item.title}
-              fallbackSrc="https://via.placeholder.com/600x300"
               objectFit="cover"
               h="200px"
               w="100%"
+              borderRadius="md"
+              fallbackSrc={getDynamicPlaceholderImage(item.title, 'news', 'medium')}
             />
             <Box p={6}>
               <VStack align="stretch" spacing={4}>

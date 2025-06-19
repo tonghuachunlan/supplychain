@@ -12,6 +12,7 @@ import {
   ListIcon,
   Grid,
   GridItem,
+  HStack,
 } from '@chakra-ui/react';
 import {
   FiCheckCircle,

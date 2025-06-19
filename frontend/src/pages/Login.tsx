@@ -62,7 +62,7 @@ export default function Login() {
     setIsSubmitting(true);
     
     try {
-      await login({ email, password });
+      await login(email, password);
       toast({
         title: '登录成功',
         description: '欢迎回来！',
@@ -142,10 +142,11 @@ export default function Login() {
           
           <Button
             type="submit"
-            colorScheme="brand"
+            colorScheme="blue"
             size="lg"
             isLoading={isSubmitting}
             loadingText="登录中..."
+            width="100%"
           >
             登录
           </Button>

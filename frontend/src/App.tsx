@@ -22,11 +22,13 @@ import PolicyAnalysis from './pages/industry/PolicyAnalysis';
 import TechnologyTrends from './pages/industry/TechnologyTrends';
 import CaseStudies from './pages/industry/CaseStudies';
 
-// 专家观点（待实现）
+// 专家观点
 import ExpertColumns from './pages/expert/ExpertColumns';
 import DeepArticles from './pages/expert/DeepArticles';
 import Solutions from './pages/expert/Solutions';
 import ExpertQA from './pages/expert/ExpertQA';
+import ExpertProfile from './pages/expert/ExpertProfile';
+import ExpertQADetail from './pages/expert/ExpertQADetail';
 
 // 供应链学院（整合已有课程系统）
 import AcademyHome from './pages/academy/Home';
@@ -112,6 +114,8 @@ function App() {
                   <Route path="articles" element={<DeepArticles />} />
                   <Route path="solutions" element={<Solutions />} />
                   <Route path="qa" element={<ExpertQA />} />
+                  <Route path=":expertId" element={<ExpertProfile />} />
+                  <Route path="qa/:expertId" element={<ExpertQADetail />} />
                 </Route>
 
                 {/* 咨询与服务 */}

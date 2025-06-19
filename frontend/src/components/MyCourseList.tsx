@@ -18,6 +18,7 @@ import {
 import { FiMoreVertical, FiPlay, FiClock } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { Course } from '../api/services/course.service';
+import { getPlaceholderImage } from '../constants/images';
 
 interface MyCourseListProps {
   courses: (Course & {
@@ -101,12 +102,12 @@ export function MyCourseList({ courses, onRemove }: MyCourseListProps) {
               _hover={{ transform: 'translateY(-4px)', shadow: 'md' }}
             >
               <Image
-                src={course.coverImage}
+                src={course.coverImage || getPlaceholderImage('course', 'medium')}
                 alt={course.title}
                 height="160px"
                 width="100%"
                 objectFit="cover"
-                fallbackSrc="https://placehold.co/400x160?text=课程封面"
+                fallbackSrc={getPlaceholderImage('course', 'medium')}
               />
 
               <Box p={4}>

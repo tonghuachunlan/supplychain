@@ -99,7 +99,7 @@ export default function Footer() {
               </HStack>
               <HStack>
                 <Icon as={FiMapPin} />
-                <Text>北京市朝阳区科技园区</Text>
+                <Text>北京市海淀区北方地产大厦</Text>
               </HStack>
             </Stack>
             <Text fontSize="sm" color="gray.500">

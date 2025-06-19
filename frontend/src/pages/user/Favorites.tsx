@@ -27,6 +27,7 @@ import {
   FiClock,
   FiEye,
 } from 'react-icons/fi';
+import { getDynamicPlaceholderImage } from '../../constants/images';
 
 const Favorites: React.FC = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -158,12 +159,12 @@ const Favorites: React.FC = () => {
                     overflow="hidden"
                   >
                     <Image
-                      src={course.image}
+                      src={getDynamicPlaceholderImage(course.title, 'course', 'medium')}
                       alt={course.title}
                       height="200px"
                       width="100%"
                       objectFit="cover"
-                      fallbackSrc="https://via.placeholder.com/400x200"
+                      fallbackSrc={getDynamicPlaceholderImage(course.title, 'course', 'medium')}
                     />
                     <Box p={6}>
                       <VStack align="stretch" spacing={4}>
@@ -233,12 +234,12 @@ const Favorites: React.FC = () => {
                     overflow="hidden"
                   >
                     <Image
-                      src={article.image}
+                      src={getDynamicPlaceholderImage(article.title, 'news', 'medium')}
                       alt={article.title}
                       height="200px"
                       width="100%"
                       objectFit="cover"
-                      fallbackSrc="https://via.placeholder.com/400x200"
+                      fallbackSrc={getDynamicPlaceholderImage(article.title, 'news', 'medium')}
                     />
                     <Box p={6}>
                       <VStack align="stretch" spacing={4}>

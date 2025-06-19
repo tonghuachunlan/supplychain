@@ -196,7 +196,7 @@ export default function ExpertColumns() {
                   </Button>
                   <Button
                     as={Link}
-                    to="/qa/expert/wushugui"
+                    to={`/expert/qa/${mainExpert.id}`}
                     variant="outline"
                     colorScheme="blue"
                     rightIcon={<FiMessageSquare />}
@@ -293,7 +293,7 @@ export default function ExpertColumns() {
                           <HStack spacing={2}>
                             <Button
                               as={Link}
-                              to={`/course/${course.id}`}
+                              to={`/academy/courses/${course.id}`}
                               colorScheme="blue"
                               rightIcon={<FiVideo />}
                             >
@@ -301,7 +301,7 @@ export default function ExpertColumns() {
                             </Button>
                             <Button
                               as={Link}
-                              to={`/course/${course.id}/qa`}
+                              to={`/expert/qa/${mainExpert.id}`}
                               variant="outline"
                               colorScheme="blue"
                               rightIcon={<FiMessageSquare />}

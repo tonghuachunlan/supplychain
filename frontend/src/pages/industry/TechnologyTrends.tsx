@@ -26,6 +26,7 @@ import {
   FiBookmark,
   FiThumbsUp,
 } from 'react-icons/fi';
+import { getDynamicPlaceholderImage } from '../../constants/images';
 
 const TechnologyTrends: React.FC = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -119,12 +120,13 @@ const TechnologyTrends: React.FC = () => {
             transition="all 0.3s"
           >
             <Image
-              src={trend.image}
+              src={getDynamicPlaceholderImage(trend.title, 'news', 'medium')}
               alt={trend.title}
-              fallbackSrc="https://via.placeholder.com/600x300"
               objectFit="cover"
-              h="200px"
               w="100%"
+              h="180px"
+              borderRadius="md"
+              fallbackSrc={getDynamicPlaceholderImage(trend.title, 'news', 'medium')}
             />
             <Box p={6}>
               <VStack align="stretch" spacing={4}>

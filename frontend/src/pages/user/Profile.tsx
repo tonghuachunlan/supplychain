@@ -31,6 +31,7 @@ import {
   FiBriefcase,
   FiEdit,
 } from 'react-icons/fi';
+import { getDynamicPlaceholderImage } from '../../constants/images';
 
 const Profile: React.FC = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -72,7 +73,7 @@ const Profile: React.FC = () => {
               <Avatar
                 size="2xl"
                 name={userProfile.name}
-                src={userProfile.avatar}
+                src={getDynamicPlaceholderImage('用户头像', 'avatar', 'medium')}
               />
               <VStack align="start" spacing={2}>
                 <Heading size="lg">{userProfile.name}</Heading>

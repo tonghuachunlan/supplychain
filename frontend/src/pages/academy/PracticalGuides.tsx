@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { FiClock, FiUsers, FiStar, FiBookOpen } from 'react-icons/fi';
 import { Link as RouterLink } from 'react-router-dom';
+import { getDynamicPlaceholderImage } from '../../constants/images';
 
 const PracticalGuides: React.FC = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -80,12 +81,13 @@ const PracticalGuides: React.FC = () => {
             transition="all 0.3s"
           >
             <Image
-              src={guide.image}
+              src={getDynamicPlaceholderImage(guide.title, 'course', 'medium')}
               alt={guide.title}
-              fallbackSrc="https://via.placeholder.com/400x225"
               objectFit="cover"
-              h="200px"
+              h="180px"
               w="100%"
+              borderRadius="md"
+              fallbackSrc={getDynamicPlaceholderImage(guide.title, 'course', 'medium')}
             />
             <Box p={6}>
               <VStack align="start" spacing={4}>

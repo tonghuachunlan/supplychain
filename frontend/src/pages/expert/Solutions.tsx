@@ -16,6 +16,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { FiUsers, FiTrendingUp, FiCheckCircle } from 'react-icons/fi';
 import PageTemplate from '../../components/PageTemplate';
+import { getDynamicPlaceholderImage } from '../../constants/images';
 
 // 模拟数据
 const solutions = [
@@ -117,11 +118,13 @@ export default function Solutions() {
               <Stack spacing={6}>
                 {/* 封面图片 */}
                 <Image
-                  src={solution.coverImage}
+                  src={getDynamicPlaceholderImage(solution.title, 'news', 'medium')}
                   alt={solution.title}
-                  borderRadius="lg"
-                  height="200px"
                   objectFit="cover"
+                  h="180px"
+                  w="100%"
+                  borderRadius="md"
+                  fallbackSrc={getDynamicPlaceholderImage(solution.title, 'news', 'medium')}
                 />
 
                 {/* 标题和简介 */}

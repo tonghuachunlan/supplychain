@@ -42,6 +42,10 @@ const theme = extendTheme({
     },
     // 按钮样式
     Button: {
+      baseStyle: {
+        fontWeight: 'medium',
+        borderRadius: 'button',
+      },
       variants: {
         primary: {
           bg: 'brand.primary',
@@ -65,6 +69,21 @@ const theme = extendTheme({
           color: 'white',
           _hover: {
             bg: '#00D632',
+          },
+        },
+      },
+      // 颜色方案配置
+      colorScheme: {
+        brand: {
+          solid: {
+            bg: 'brand.primary',
+            color: 'white',
+            _hover: {
+              bg: '#2970FF',
+            },
+            _active: {
+              bg: '#1E54E6',
+            },
           },
         },
       },

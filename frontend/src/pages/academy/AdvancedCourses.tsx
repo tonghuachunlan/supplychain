@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { FiClock, FiUsers, FiStar } from 'react-icons/fi';
 import { Link as RouterLink } from 'react-router-dom';
+import { getPlaceholderImage, getDynamicPlaceholderImage } from '../../constants/images';
 
 const AdvancedCourses: React.FC = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -28,7 +29,7 @@ const AdvancedCourses: React.FC = () => {
       duration: '15小时',
       students: 800,
       rating: 4.9,
-      image: 'https://example.com/advanced1.jpg',
+      image: getPlaceholderImage('course', 'medium'),
       tags: ['进阶', '战略规划'],
       prerequisites: ['供应链管理基础'],
     },
@@ -39,7 +40,7 @@ const AdvancedCourses: React.FC = () => {
       duration: '20小时',
       students: 600,
       rating: 4.8,
-      image: 'https://example.com/advanced2.jpg',
+      image: getPlaceholderImage('course', 'medium'),
       tags: ['进阶', '网络优化'],
       prerequisites: ['供应链管理基础', '运营管理'],
     },
@@ -50,9 +51,42 @@ const AdvancedCourses: React.FC = () => {
       duration: '18小时',
       students: 750,
       rating: 4.9,
-      image: 'https://example.com/advanced3.jpg',
+      image: getPlaceholderImage('course', 'medium'),
       tags: ['进阶', '风险管理'],
       prerequisites: ['供应链管理基础', '风险管理基础'],
+    },
+    {
+      id: 4,
+      title: '供应链数字化转型',
+      description: '掌握供应链数字化转型的策略和实施方法',
+      duration: '22小时',
+      students: 650,
+      rating: 4.7,
+      image: getPlaceholderImage('course', 'medium'),
+      tags: ['进阶', '数字化转型'],
+      prerequisites: ['供应链管理基础', '信息技术基础'],
+    },
+    {
+      id: 5,
+      title: '供应链绩效管理',
+      description: '学习供应链绩效评估和优化的高级方法',
+      duration: '16小时',
+      students: 700,
+      rating: 4.8,
+      image: getPlaceholderImage('course', 'medium'),
+      tags: ['进阶', '绩效管理'],
+      prerequisites: ['供应链管理基础', '数据分析基础'],
+    },
+    {
+      id: 6,
+      title: '供应链协同管理',
+      description: '掌握供应链上下游协同管理的高级技能',
+      duration: '19小时',
+      students: 580,
+      rating: 4.6,
+      image: getPlaceholderImage('course', 'medium'),
+      tags: ['进阶', '协同管理'],
+      prerequisites: ['供应链管理基础', '供应商管理入门'],
     },
   ];
 
@@ -80,12 +114,12 @@ const AdvancedCourses: React.FC = () => {
             transition="all 0.3s"
           >
             <Image
-              src={course.image}
+              src={getDynamicPlaceholderImage(course.title, 'course', 'medium')}
               alt={course.title}
-              fallbackSrc="https://via.placeholder.com/400x225"
               objectFit="cover"
               h="200px"
               w="100%"
+              fallbackSrc={getDynamicPlaceholderImage(course.title, 'course', 'medium')}
             />
             <Box p={6}>
               <VStack align="start" spacing={4}>

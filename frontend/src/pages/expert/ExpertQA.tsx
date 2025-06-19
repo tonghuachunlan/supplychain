@@ -12,8 +12,21 @@ import {
   Button,
   useColorModeValue,
   Divider,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Textarea,
+  useToast,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 
 /**
  * @component ExpertQA
@@ -22,6 +35,11 @@ import { SearchIcon } from '@chakra-ui/icons';
 const ExpertQA: React.FC = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
   const borderColor = useColorModeValue('gray.200', 'gray.700');
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [question, setQuestion] = useState('');
+  const [contact, setContact] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
 
   // 模拟的问答数据
   const qaList = [
@@ -48,6 +66,21 @@ const ExpertQA: React.FC = () => {
       tags: ["风险管理", "供应链韧性", "应急预案"]
     }
   ];
+
+  const handleSubmit = () => {
+    if (!question.trim()) {
+      toast({ title: '请输入您的问题', status: 'warning', duration: 2000 });
+      return;
+    }
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      onClose();
+      setQuestion('');
+      setContact('');
+      toast({ title: '提交成功', description: '您的问题已提交，专家会尽快回复！', status: 'success', duration: 3000 });
+    }, 1000);
+  };
 
   return (
     <Container maxW="container.xl" py={8}>
@@ -131,9 +164,44 @@ const ExpertQA: React.FC = () => {
         size="lg"
         borderRadius="full"
         shadow="lg"
+        onClick={onOpen}
       >
         我要提问
       </Button>
+
+      {/* 提问弹窗 */}
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>向专家提问</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl isRequired mb={4}>
+              <FormLabel>您的问题</FormLabel>
+              <Textarea
+                value={question}
+                onChange={e => setQuestion(e.target.value)}
+                placeholder="请详细描述您在供应链管理中遇到的问题..."
+                rows={5}
+              />
+            </FormControl>
+            <FormControl mb={2}>
+              <FormLabel>联系方式（可选）</FormLabel>
+              <Input
+                value={contact}
+                onChange={e => setContact(e.target.value)}
+                placeholder="邮箱/手机号/微信等"
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit} isLoading={isSubmitting}>
+              提交
+            </Button>
+            <Button variant="ghost" onClick={onClose}>取消</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Container>
   );
 };

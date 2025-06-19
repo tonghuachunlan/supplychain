@@ -49,7 +49,7 @@ const ConsultingContact = () => {
     {
       icon: FiMapPin,
       title: '公司地址',
-      content: '北京市朝阳区科技园区888号',
+      content: '北京市海淀区北方地产大厦888号',
       description: '欢迎来访交流',
     },
   ];

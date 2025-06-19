@@ -35,6 +35,7 @@ import { CommentList } from '../components/CommentList';
 import EnrollButton from '../components/EnrollButton';
 import { useAuth } from '../../contexts/AuthContext';
 import PageTemplate from '../../components/PageTemplate';
+import { getDynamicPlaceholderImage } from '../../constants/images';
 
 export default function CourseDetail() {
   const { courseId } = useParams<{ courseId: string }>();

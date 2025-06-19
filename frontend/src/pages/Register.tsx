@@ -79,7 +79,7 @@ export default function Register() {
     setIsSubmitting(true);
 
     try {
-      await register(formData);
+      await register(formData.username, formData.email, formData.password);
       toast({
         title: '注册成功',
         description: '欢迎加入供应链思维学院！',
@@ -191,9 +191,10 @@ export default function Register() {
 
           <Button
             type="submit"
-            colorScheme="brand"
+            colorScheme="blue"
             size="lg"
             isLoading={isSubmitting}
+            width="100%"
           >
             注册
           </Button>
